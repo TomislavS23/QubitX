@@ -25,9 +25,9 @@ CREATE TABLE tag
 CREATE TABLE [user]
 (
     id_user             INT PRIMARY KEY IDENTITY(1, 1),
-    first_name          VARCHAR(255), -- JWT claim
-    last_name           VARCHAR(255), -- JWT claim
-    username            VARCHAR(255) UNIQUE,
+    first_name          VARCHAR(255),
+    last_name           VARCHAR(255),
+    username            VARCHAR(255) UNIQUE, -- JWT claim
     hashed_password     VARCHAR(MAX),
     id_role             INT FOREIGN KEY REFERENCES [role](id_role) -- JWT claim
 )
@@ -51,13 +51,15 @@ CREATE TABLE section_type
 -- M-to-N (Multiple users can read multiple courses)
 CREATE TABLE user_course
 (
-    id_user     INT FOREIGN KEY REFERENCES [user](id_user),
-    id_course   INT FOREIGN KEY REFERENCES course(id_course)
+    id_user_course  INT PRIMARY KEY IDENTITY(1, 1),
+    id_user         INT FOREIGN KEY REFERENCES [user](id_user),
+    id_course       INT FOREIGN KEY REFERENCES course(id_course)
 )
 
 -- M-to-N
 CREATE TABLE course_tag
 (
+    id_course_tag INT PRIMARY KEY IDENTITY(1, 1),
     id_course INT FOREIGN KEY REFERENCES course(id_course),
     id_tag INT FOREIGN KEY REFERENCES tag(id_tag)
 )
@@ -65,6 +67,7 @@ CREATE TABLE course_tag
 -- 1-to-N
 CREATE TABLE course_section
 (
+    id_course_section INT PRIMARY KEY IDENTITY(1, 1),
     id_course           INT FOREIGN KEY REFERENCES course(id_course),
     id_section_type     INT FOREIGN KEY REFERENCES section_type(id_section_type),
     content             NVARCHAR(MAX)
@@ -73,6 +76,8 @@ CREATE TABLE course_section
 -- Log
 CREATE TABLE log
 (
-    id_log INT PRIMARY KEY IDENTITY(1, 1),
-    content VARCHAR(MAX)
+    id_log          INT PRIMARY KEY IDENTITY(1, 1),
+    log_timestamp   TIMESTAMP,
+    log_level       TINYINT CHECK(log_level > 0 AND log_level <= 5),
+    log_message     VARCHAR(MAX)
 )
