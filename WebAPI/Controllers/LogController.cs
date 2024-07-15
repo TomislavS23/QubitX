@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
@@ -5,7 +6,7 @@ using WebAPI.Models;
 namespace WebAPI.Controllers;
 
 [ApiController]
-[Route("api/logs/")]
+[Route("api/logs")]
 public class LogController : Controller
 {
     private readonly QubitXContext _context;
@@ -23,6 +24,21 @@ public class LogController : Controller
         {
             var query = _context.Logs.Take(n).ToList();
             return Ok(query);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpGet("count")]
+    [Authorize(Roles = "Admin")]
+    public ActionResult<int> GetLogCount()
+    {
+        try
+        {
+            var logNumber = _context.Logs.Count();
+            return Ok(logNumber);
         }
         catch (Exception e)
         {

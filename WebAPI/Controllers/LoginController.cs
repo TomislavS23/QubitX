@@ -65,7 +65,7 @@ public class LoginController : Controller
         }
     }
 
-    [HttpPut("/changepassword")]
+    [HttpPut("changepassword")]
     [Authorize(Roles = "Admin, User")]
     public ActionResult ChangePassword(string username, string password)
     {

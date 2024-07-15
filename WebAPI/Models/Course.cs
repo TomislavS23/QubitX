@@ -11,9 +11,9 @@ public partial class Course
 
     public int? IdCourseType { get; set; }
 
-    public string? Title { get; set; }
+    public string? CourseTitle { get; set; }
 
-    public virtual ICollection<CourseSection> CourseSections { get; } = new List<CourseSection>();
+    public string? CourseContent { get; set; }
 
     public virtual ICollection<CourseTag> CourseTags { get; } = new List<CourseTag>();
 

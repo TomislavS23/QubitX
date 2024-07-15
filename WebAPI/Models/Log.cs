@@ -7,5 +7,9 @@ public partial class Log
 {
     public int IdLog { get; set; }
 
-    public string? Content { get; set; }
+    public DateTime? LogTimestamp { get; set; }
+
+    public byte? LogLevel { get; set; }
+
+    public string? LogMessage { get; set; }
 }
