@@ -11,7 +11,7 @@ public class Program
 
         builder.Services.AddHttpClient("httpclient", client =>
         {
-            client.BaseAddress = new Uri("http://localhost:5190/");
+            client.BaseAddress = new Uri("http://localhost:5097/");
         });
 
         var app = builder.Build();

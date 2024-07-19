@@ -7,13 +7,11 @@ namespace WebApp.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly HttpClient _httpClient;
 
-    public HomeController(ILogger<HomeController> logger, IHttpClientFactory client)
+    public HomeController(IHttpClientFactory client)
     {
-        _logger = logger;
         _httpClientFactory = client;
         _httpClient = _httpClientFactory.CreateClient("httpclient");
     }
@@ -25,8 +23,6 @@ public class HomeController : Controller
 
     public IActionResult HelloWorld()
     {
-        ViewBag["Miro"] = "miric";
-        
         return View();
     }
 }
