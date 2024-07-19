@@ -8,6 +8,14 @@
     color: #fff0ff !important;
 }
 
+.navbar-nav .nav-item .nav-link:hover
+{
+    color: #0fd69a !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 5px !important;
+}
+
 .version
 {
     color: rgb(153 161 179);
@@ -64,4 +72,72 @@
 .fs-custom-02
 {
     font-size: 32px;
+}
+
+.section-button
+{
+    border-radius: 25px 25px 25px 25px;
+    background-color: #0fd69a;
+    padding: 20px 80px;
+    text-decoration: none;
+    color: #333333;
+    font-weight: bold;
+}
+
+.section-button:hover
+{
+    outline: 2px solid #0fd69a;
+    outline-offset: 2px;
+}
+
+.section-button-02
+{
+    border-radius: 25px 25px 25px 25px;
+    border: 2px solid #fff0ff;
+    padding: 20px 80px;
+    text-decoration: none;
+    color: #fff0ff;
+    font-weight: bold;
+}
+
+.section-button-02:hover 
+{
+    background-color: rgba(236, 236, 236, 0.1);
+}
+
+/* Footer styles */
+.footer-white-a
+{
+    color: #fff0ff !important;
+    text-decoration: none !important;
+}
+
+.footer-white-icon-a
+{
+    color: #fff0ff !important;
+    text-decoration: none !important;
+}
+
+.footer-white-a:hover
+{
+    color: #0fd69a !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 5px !important;
+}
+
+.footer-white-icon-a:hover
+{
+    color: #0fd69a !important;
+}
+
+.copyright
+{
+    font-size: 12px;
+}
+
+/* Code */
+.code
+{
+    width: 35%;
 }

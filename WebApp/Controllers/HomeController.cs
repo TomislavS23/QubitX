@@ -16,12 +16,7 @@ public class HomeController : Controller
         _httpClient = _httpClientFactory.CreateClient("httpclient");
     }
 
-    public async Task<IActionResult> Index()
-    {
-        return View();
-    }
-
-    public IActionResult HelloWorld()
+    public IActionResult Index()
     {
         return View();
     }

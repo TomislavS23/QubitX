@@ -4,6 +4,15 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>QubitX - @ViewData["Title"]</title>
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        
         <link rel="stylesheet" href="lib/bootstrap-5.3.3/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="lib/highlightjs/styles/atom-one-dark.css"/>
         <link rel="stylesheet" href="css/site.css" asp-append-version="true"/>
@@ -11,28 +20,25 @@
     </head>
     <body>
         @RenderBody()
-        <nav id="main" class="navbar sticky-top border-bottom border-body navbar-expand-lg" data-bs-theme="dark">
+        <nav id="main" class="navbar sticky-top border-bottom border-body" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand fs-3 d-flex flex-row justify-content-center align-items-center fw-bold ms-3" href="#spHeading01">
-                    Qubit<span class="logo">X</span> 
+                <a class="navbar-brand fs-3 d-flex flex-row justify-content-center align-items-center fw-bold ms-3" href="#s1">
+                    Qubit<span class="secondary-color">X</span> 
                     <span class="fs-6 fw-normal ms-2 version">v1.0.0</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#spHeading01">Home</a>
+                <div class="d-flex justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav d-flex flex-row">
+                        <li class="nav-item me-4">
+                            <a class="nav-link" href="#s1">Intro</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link"  href="#s2">Learn</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link"  href="#s3">Create</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  href="#spHeading02">Learn</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"  href="#spHeading03">Create</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"  href="#spHeading04">Get Started</a>
+                            <a class="nav-link"  href="#s4">Get Started</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-light ms-5" asp-controller="Login" asp-action="Index">Login</a>
@@ -45,20 +51,22 @@
             <div class="container-fluid p-0">
                 <div class="container mt-custom mb-custom">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <h1 id="spHeading01" class="fw-bold header-custom">Qubit<span class="logo secondary-color">X</span></h1>
+                        <h1 id="s1" class="fw-bold header-custom">Qubit<span class="logo secondary-color">X</span></h1>
                         <h3 class="mt-3 text-center fs-custom-02">
                             A place to master the world of computer science through <span class="secondary-color">community-created</span> courses spanning various fields. 
-                            From foundational programming to advanced machine learning, elevate your skills with our comprehensive and accessible learning platform.
+                            From <span class="secondary-color">foundational programming </span> to <span class="secondary-color"> advanced machine learning </span>, 
+                            elevate your skills with our comprehensive and accessible learning platform.
                         </h3>
                         <div class="container d-flex justify-content-center align-items-center mt-custom">
-                            <button class="btn btn-outline-light me-5">temp btn</button>
-                            <button class="btn btn-outline-light">temp btn</button>
+                            <a href="#" class="section-button ms-3">Login</a>
                         </div>
                     </div>
                 </div>
                 <div class="container-fluid p-0 secondary-sector-body">
                     <div class="p-5 d-flex flex-column justify-content-center align-items-center">
-                        <h1 id="spHeading02" class="section-header-max-width text-center fw-bold fs-custom-01 mt-custom">Read interesting tutorials and learn like never before</h1>
+                        <h1 id="s2" class="section-header-max-width text-center fw-bold fs-custom-01 mt-custom">
+                            Read interesting courses and learn like never before
+                        </h1>
                         <p class="section-paragraph-max-width section-paragraph-fs mt-3 mb-custom text-center">
                             Qubit<span class="secondary-color">X</span> 
                             lets you choose from variety of community-built courses about various CS topics, such as:
@@ -71,24 +79,152 @@
                         </p>
                     </div>
                 </div>
-                <div class="p-5">
-                    <h4 id="spHeading03">Do you know certain topic and want others to know more about it?</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam amet architecto consectetur
-                        corporis dolorum eligendi eos et hic illum incidunt labore, nulla odio omnis quam rem sed similique te
-                        netur vel velit. Adipisci aliquid aut deleniti deserunt doloremque dolores ea earum eius eligendi facili
-                        s harum in incidunt ipsam iste labore magni maiores modi molestiae nihil nisi nostrum omnis optio perspi
-                        ciatis praesentium quas quisquam rerum, sint tenetur totam ut.</p>
+                <div class="p-5 d-flex flex-column justify-content-center align-items-center">
+                    <h4 id="s3" class="w-50 text-center fw-bold fs-custom-01 mt-custom">
+                        Share your <span class="secondary-color">expertise</span> and inspire others to 
+                        <span class="secondary-color">learn</span>
+                    </h4>
+                    <p class="section-paragraph-max-width section-paragraph-fs mt-custom text-center">
+                        Write your own code in our editor, which supports automatic syntax highlighting for a seamless experience.
+                        Our editor also supports HTML and Markdown, and it includes a live preview feature to see your code in action instantly.
+                    </p>
+<div class="container d-flex justify-content-center mt-custom">
+<div class="card w-50">
+<div class="card-header">
+    Markdown
+</div>
+<div class="card-body">
+<pre class="card-text">
+# My main paragraph
+
+```csharp
+// GET: Movies/Details/5
+public IActionResult Details(int? id)
+{
+    if (id == null)
+    {
+        return NotFound();
+    }
+
+    var movie = await _context.Movie
+        .FirstOrDefaultAsync(m => m.Id == id);
+    if (movie == null)
+    {
+        return NotFound();
+    }
+
+    return View(movie);
+}
+```
+</pre>
+</div>
+</div>
+<div class="card w-50 ms-5">
+<div class="card-header">
+    <span class="secondary-color">Live Preview</span>
+</div>
+<div class="card-body">
+<pre class="card-text">
+<h1 class="fw-bold fs-5 border-bottom pb-1 m-0">My main paragraph!</h1>
+<code>
+// GET: Movies/Details/5
+public IActionResult Details(int? id)
+{
+    if (id == null)
+    {
+        return NotFound();
+    }
+
+    var movie = await _context.Movie
+        .FirstOrDefaultAsync(m => m.Id == id);
+    if (movie == null)
+    {
+        return NotFound();
+    }
+
+    return View(movie);
+}
+</code>
+</pre>
+</div>
+</div>
+</div>
+                    <p class="section-paragraph-max-width section-paragraph-fs mt-custom mb-custom text-center">
+                        Plus, you have the freedom to style your courses however you want, giving you complete creative control.
+                    </p>
                 </div>
-                <div class="p-5">
-                    <h4 id="spHeading04">Get Started</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam amet architecto consectetur
-                        corporis dolorum eligendi eos et hic illum incidunt labore, nulla odio omnis quam rem sed similique te
-                        netur vel velit. Adipisci aliquid aut deleniti deserunt doloremque dolores ea earum eius eligendi facili
-                        s harum in incidunt ipsam iste labore magni maiores modi molestiae nihil nisi nostrum omnis optio perspi
-                        ciatis praesentium quas quisquam rerum, sint tenetur totam ut.</p>
+                <div class="container-fluid p-0 secondary-sector-body">
+                    <div class="p-5 d-flex flex-column justify-content-center align-items-center">
+                        <h1 id="s4" class="section-header-max-width text-center fw-bold fs-custom-01 mt-custom">
+                            Join a <span class="secondary-color">community</span> of millions
+                        </h1>
+                        <p class="section-paragraph-max-width section-paragraph-fs mt-3 text-center mb-custom">
+                            This is why Qubit<span class="secondary-color">X</span> is more than just a platform for diverse courses. It’s a 
+                            thriving community where you can seek guidance, uncover opportunities, and connect with like-minded individuals. 
+                            At Qubit<span class="secondary-color">X</span>, you’ll engage with
+                            <span class="secondary-color">developers</span>,
+                            <span class="secondary-color">designers</span>,
+                            <span class="secondary-color">beginners</span>,
+                            <span class="secondary-color">experts</span>,
+                            <span class="secondary-color">researchers</span>, and
+                            <span class="secondary-color">artists</span>.
+                            Our backgrounds 
+                            may be very different, but Qubit<span class="secondary-color">X</span> unites us in the pursuit of knowledge and innovation.
+                        </p>
+                        <div class="mb-custom">
+                            <a href="#" class="section-button">Login</a>
+                            <a href="#" class="section-button-02 ms-3">Register</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <footer class="container mt-5 mb-custom">
+            <div class="row">
+                <div class="col d-flex flex-column align-items-center">
+                    <div>
+                        <div class="fs-5 fw-bold">
+                            Qubit<span class="secondary-color">X</span>
+                        </div>
+                        <p class="copyright">&copy; 2024.</p>
+                    </div>
+                </div>
+                <div class="col d-flex flex-column align-items-center">
+                    <div>
+                        <div class="fs-5 fw-bold">
+                            Get Started
+                        </div>
+                        <div class="d-flex flex-column mt-2">
+                            <a class="footer-white-a" asp-controller="Login" asp-action="Index">Login</a>
+                            <a class="footer-white-a mt-1" asp-controller="Login" asp-action="Index">Register</a> @* Change to register action *@
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex flex-column align-items-center">
+                    <div>
+                        <div class="fs-5 fw-bold">
+                            Support
+                        </div>
+                        <div class="d-flex flex-column mt-2">
+                            <a class="footer-white-a" asp-controller="Login" asp-action="Index">Contact Us</a>
+                            <a class="footer-white-a mt-1" asp-controller="Login" asp-action="Index">FaQ</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex flex-column align-items-center">
+                    <div>
+                        <div class="fs-5 fw-bold">
+                            Visit Us
+                        </div>
+                        <div class="d-flex mt-2">
+                            <a href="#"><i class="fa-brands fa-instagram fa-2x footer-white-icon-a"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin fa-2x ms-3 footer-white-icon-a"></i></a>
+                            <a href="#"><i class="fa-brands fa-github fa-2x ms-3 footer-white-icon-a"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
         @* ==== SCRIPTS ==== *@
         <script src="lib/bootstrap-5.3.3/js/bootstrap.bundle.min.js"></script>
