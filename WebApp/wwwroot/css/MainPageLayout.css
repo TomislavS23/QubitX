@@ -1,0 +1,67 @@
+.navbar
+{
+    background-color: rgb(35 39 47) !important;
+}
+
+.navbar-nav .nav-item .nav-link
+{
+    color: #fff0ff !important;
+}
+
+.version
+{
+    color: rgb(153 161 179);
+}
+
+.secondary-color
+{
+    color: #0fd69a;
+}
+
+.secondary-sector-body
+{
+    background: conic-gradient(from 90deg at -10% 100%,#2b303b 0deg,#2b303b 90deg,#16181d 1turn) fixed;
+}
+
+/* home section */
+
+.header-custom
+{
+    font-size: 92px;
+}
+
+/* custom section styles */
+.mt-custom
+{
+    margin-top: 6rem;
+}
+
+.mb-custom
+{
+    margin-bottom: 8rem;
+}
+
+.section-header-max-width
+{
+    max-width: 36rem;
+}
+
+.section-paragraph-max-width
+{
+    max-width: 48rem;
+}
+
+.section-paragraph-fs
+{
+    font-size: 20px;
+}
+
+.fs-custom-01
+{
+    font-size: 52px;
+}
+
+.fs-custom-02
+{
+    font-size: 32px;
+}

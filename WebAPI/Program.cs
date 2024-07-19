@@ -16,7 +16,6 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         
@@ -31,6 +30,7 @@ public class Program
             };
         });
         
+        // SWAGGER config
         builder.Services.AddSwaggerGen(option =>
         {
             option.AddSecurityDefinition("Bearer",
@@ -61,6 +61,7 @@ public class Program
                 });
         });
         
+        // DBContext config
         builder.Services.AddDbContext<QubitXContext>(
             options => options.UseSqlServer("name=ConnectionStrings:server"));
         
