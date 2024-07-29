@@ -1,0 +1,134 @@
+@{
+    ViewData["Title"] = "Main";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>QubitX - @ViewData["Title"]</title>
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        
+        <link rel="stylesheet" href="lib/bootstrap-5.3.3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="lib/highlightjs/styles/atom-one-dark.css"/>
+        <link rel="stylesheet" href="css/General/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="css/LandingPage/LandingPageStyles.css">
+        <link rel="stylesheet" href="css/MainPage/OffcanvasStyles.css"/>
+        <link rel="stylesheet" href="css/MainPage/MainPageFormStyle.css"/>
+    </head>
+    <body>
+        <nav id="main" class="navbar sticky-top border-bottom" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand fs-3 d-flex flex-row justify-content-center align-items-center fw-bold ms-3">
+                    Qubit<span class="secondary-color">X</span> 
+                    <span class="fs-6 fw-normal ms-2 version">v1.0.0</span>
+                </a>
+                <div class="d-flex justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav d-flex flex-row align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="User" asp-action="Index">Main Page</a>
+                        </li>
+                        
+                        <div class="nav-item border h-100 mx-3"></div>
+
+                        <form class="d-flex align-items-center">
+                            <div class="input-group">
+                                <input type="text" class="form-control shadow-none" placeholder="Search courses...">
+                                <button class="btn btn-outline-info" type="submit" id="button-addon2">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="nav-item border h-100 mx-3"></div>
+                        
+                        <li class="nav-item me-3 ms-2">
+                            <a class="nav-link p-0" 
+                               type="button" 
+                               data-bs-toggle="offcanvas" 
+                               data-bs-target="#offcanvasWithBothOptions" 
+                               aria-controls="offcanvasWithBothOptions"><i class="fa-regular fa-circle-user fa-2x"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        @RenderBody()
+        
+        @* TODO: Filters here... *@
+
+        <div class="offcanvas offcanvas-end"
+             data-bs-scroll="false"
+             tabindex="-1"
+             id="offcanvasWithBothOptions"
+             aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-theme="dark">
+            <div class="offcanvas-header">
+                <div class="input-group">
+                    <span class="input-group-text" id="addon-wrapping">@@</span>
+                    <p class="border rounded-end-2 m-0 d-flex align-items-center px-3 username-display text-white">SomeUsernameVeryLong</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column pt-0">
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-regular fa-user"></i></span>
+                    <span>Your Profile</span>
+                </a>
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-graduation-cap"></i></span>
+                    <span>Your Learning</span>
+                </a>
+                
+                <div class="border-bottom my-2"></div>
+
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-pen"></i></span>
+                    <span>Create New Course</span>
+                </a>
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-list-check"></i></span>
+                    <span>Manage Courses</span>
+                </a>
+
+                <div class="border-bottom my-2"></div>
+
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-book-open"></i></span>
+                    <span>QubitX Docs</span>
+                </a>
+
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-comments"></i></span>
+                    <span>QubitX Support</span>
+                </a>
+
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-users-gear"></i></span>
+                    <span>QubitX Community (Soon)</span>
+                </a>
+
+                <div class="border-bottom mb-4 mt-2"></div>
+                <a class="custom-offcanvas-link" asp-controller="Account" asp-action="Logout">
+                    <span class="text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                    <span class="text-danger">Sign Out</span>
+                </a>
+            </div>
+        </div>
+
+        @* ==== SCRIPTS ==== *@
+        <script src="lib/bootstrap-5.3.3/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/highlightjs/highlight.min.js"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+</html>

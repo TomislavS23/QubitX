@@ -21,9 +21,14 @@
     color: rgb(153 161 179);
 }
 
+.primary-color
+{
+    background-color: rgb(35 39 47) !important;
+}
+
 .secondary-color
 {
-    color: #0fd69a;
+    color: #0fd69a !important;
 }
 
 .secondary-sector-body
@@ -134,6 +139,11 @@
 .copyright
 {
     font-size: 12px;
+}
+
+.bgfooter
+{
+    background-color: rgb(35 39 47) !important;
 }
 
 /* Code */

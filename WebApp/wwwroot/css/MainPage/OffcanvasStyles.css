@@ -1,0 +1,28 @@
+.custom-offcanvas-link
+{
+    color: #fff0ff !important;
+    text-decoration: none !important;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.custom-offcanvas-link:hover
+{
+    background-color: rgba(236, 236, 236, 0.05);
+}
+
+.custom-offcanvas-link span:first-child {
+    width: 30px; 
+    display: flex;
+    justify-content: center;
+}
+
+.custom-offcanvas-link span:last-child {
+    margin-left: 10px;
+}
+
+.username-display
+{
+    background: rgb(35 39 47) !important;
+}

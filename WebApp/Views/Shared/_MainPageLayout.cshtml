@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>QubitX - @ViewData["Title"]</title>
+        <title>QubitX</title>
 
         <link
             rel="stylesheet"
@@ -15,8 +15,8 @@
         
         <link rel="stylesheet" href="lib/bootstrap-5.3.3/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="lib/highlightjs/styles/atom-one-dark.css"/>
-        <link rel="stylesheet" href="css/site.css" asp-append-version="true"/>
-        <link rel="stylesheet" href="css/MainPageLayout.css"/>
+        <link rel="stylesheet" href="css/General/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="css/LandingPage/LandingPageStyles.css"/>
     </head>
     <body>
         @RenderBody()
@@ -41,7 +41,7 @@
                             <a class="nav-link"  href="#s4">Get Started</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-light ms-5" asp-controller="Login" asp-action="Index">Login</a>
+                            <a class="btn btn-outline-light ms-5" asp-controller="User" asp-action="Index">Login</a>
                         </li>
                     </ul>
                 </div>
