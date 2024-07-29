@@ -61,10 +61,44 @@
                 </div>
             </div>
         </nav>
+
+        <form method="post" class="p-3 d-flex">
+            <div class="w-25">
+                <label class="form-label">Filter by course type: </label>
+                <select class="form-select shadow-none" data-bs-theme="dark">
+                    <option selected>Select...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="mx-3">
+                <label class="form-label">Filter by tag: </label>
+                <select class="form-select shadow-none" data-bs-theme="dark">
+                    <option selected>Select...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label">Content Per Page: </label>
+                <select class="form-select shadow-none w-50" data-bs-theme="dark">
+                    <option selected>N</option>
+                    <option value="1">10</option>
+                    <option value="2">20</option>
+                    <option value="3">50</option>
+                </select>
+            </div>
+            <div class="ms-5 d-flex align-items-end">
+                <button type="reset" class="btn btn-outline-danger">Reset</button>
+                <button type="submit" class="btn btn-outline-info ms-3">Submit</button>
+            </div>
+        </form>
         
-        @RenderBody()
-        
-        @* TODO: Filters here... *@
+        <main class="container mt-5">
+            @RenderBody()
+        </main>
 
         <div class="offcanvas offcanvas-end"
              data-bs-scroll="false"
