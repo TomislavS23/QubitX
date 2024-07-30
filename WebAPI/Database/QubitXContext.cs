@@ -31,15 +31,18 @@ public partial class QubitXContext : DbContext
 
     public virtual DbSet<UserCourse> UserCourses { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:server");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Course>(entity =>
         {
-            entity.HasKey(e => e.IdCourse).HasName("PK__course__FB82D9EA0DF17F5F");
+            entity.HasKey(e => e.IdCourse).HasName("PK__course__FB82D9EA1E7C3B2E");
 
             entity.ToTable("course");
 
-            entity.HasIndex(e => e.CourseTitle, "UQ__course__622E10B6B260AFBE").IsUnique();
+            entity.HasIndex(e => e.CourseTitle, "UQ__course__622E10B6CD60AB71").IsUnique();
 
             entity.Property(e => e.IdCourse).HasColumnName("id_course");
             entity.Property(e => e.CourseContent).HasColumnName("course_content");
@@ -52,16 +55,16 @@ public partial class QubitXContext : DbContext
 
             entity.HasOne(d => d.IdCourseTypeNavigation).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.IdCourseType)
-                .HasConstraintName("FK__course__id_cours__4D2A7347");
+                .HasConstraintName("FK__course__id_cours__04E4BC85");
 
             entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.IdUser)
-                .HasConstraintName("FK__course__id_user__4C364F0E");
+                .HasConstraintName("FK__course__id_user__03F0984C");
         });
 
         modelBuilder.Entity<CourseTag>(entity =>
         {
-            entity.HasKey(e => e.IdCourseTag).HasName("PK__course_t__0F4728A43674B9E8");
+            entity.HasKey(e => e.IdCourseTag).HasName("PK__course_t__0F4728A45601370F");
 
             entity.ToTable("course_tag");
 
@@ -71,31 +74,31 @@ public partial class QubitXContext : DbContext
 
             entity.HasOne(d => d.IdCourseNavigation).WithMany(p => p.CourseTags)
                 .HasForeignKey(d => d.IdCourse)
-                .HasConstraintName("FK__course_ta__id_co__53D770D6");
+                .HasConstraintName("FK__course_ta__id_co__0B91BA14");
 
             entity.HasOne(d => d.IdTagNavigation).WithMany(p => p.CourseTags)
                 .HasForeignKey(d => d.IdTag)
-                .HasConstraintName("FK__course_ta__id_ta__54CB950F");
+                .HasConstraintName("FK__course_ta__id_ta__0C85DE4D");
         });
 
         modelBuilder.Entity<CourseType>(entity =>
         {
-            entity.HasKey(e => e.IdCourseType).HasName("PK__course_t__008F500790515710");
+            entity.HasKey(e => e.IdCourseType).HasName("PK__course_t__008F5007442A4CFC");
 
             entity.ToTable("course_type");
 
-            entity.HasIndex(e => e.CourseType1, "UQ__course_t__56F86B46E2B60905").IsUnique();
+            entity.HasIndex(e => e.CourseTypeTitle, "UQ__course_t__318509552ACDA7ED").IsUnique();
 
             entity.Property(e => e.IdCourseType).HasColumnName("id_course_type");
-            entity.Property(e => e.CourseType1)
+            entity.Property(e => e.CourseTypeTitle)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasColumnName("course_type");
+                .HasColumnName("course_type_title");
         });
 
         modelBuilder.Entity<Log>(entity =>
         {
-            entity.HasKey(e => e.IdLog).HasName("PK__log__6CC851FE2DFE0304");
+            entity.HasKey(e => e.IdLog).HasName("PK__log__6CC851FE042FD841");
 
             entity.ToTable("log");
 
@@ -111,7 +114,7 @@ public partial class QubitXContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.IdRole).HasName("PK__role__3D48441D516E1763");
+            entity.HasKey(e => e.IdRole).HasName("PK__role__3D48441D33EC2D62");
 
             entity.ToTable("role");
 
@@ -124,11 +127,11 @@ public partial class QubitXContext : DbContext
 
         modelBuilder.Entity<Tag>(entity =>
         {
-            entity.HasKey(e => e.IdTag).HasName("PK__tag__6A2987F12828689A");
+            entity.HasKey(e => e.IdTag).HasName("PK__tag__6A2987F1EA89081A");
 
             entity.ToTable("tag");
 
-            entity.HasIndex(e => e.TagTitle, "UQ__tag__9C939061B9936199").IsUnique();
+            entity.HasIndex(e => e.TagTitle, "UQ__tag__9C9390612E6E7A89").IsUnique();
 
             entity.Property(e => e.IdTag).HasColumnName("id_tag");
             entity.Property(e => e.TagTitle)
@@ -139,11 +142,11 @@ public partial class QubitXContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.IdUser).HasName("PK__user__D2D1463761E2348E");
+            entity.HasKey(e => e.IdUser).HasName("PK__user__D2D14637ED73AF74");
 
             entity.ToTable("user");
 
-            entity.HasIndex(e => e.Username, "UQ__user__F3DBC5722F1F0BCC").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__user__F3DBC572F96451D3").IsUnique();
 
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.FirstName)
@@ -165,12 +168,12 @@ public partial class QubitXContext : DbContext
 
             entity.HasOne(d => d.IdRoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdRole)
-                .HasConstraintName("FK__user__id_role__4865BE2A");
+                .HasConstraintName("FK__user__id_role__00200768");
         });
 
         modelBuilder.Entity<UserCourse>(entity =>
         {
-            entity.HasKey(e => e.IdUserCourse).HasName("PK__user_cou__3AEEB9ECB46371B5");
+            entity.HasKey(e => e.IdUserCourse).HasName("PK__user_cou__3AEEB9EC59A8E4F7");
 
             entity.ToTable("user_course");
 
@@ -180,11 +183,11 @@ public partial class QubitXContext : DbContext
 
             entity.HasOne(d => d.IdCourseNavigation).WithMany(p => p.UserCourses)
                 .HasForeignKey(d => d.IdCourse)
-                .HasConstraintName("FK__user_cour__id_co__50FB042B");
+                .HasConstraintName("FK__user_cour__id_co__08B54D69");
 
             entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.UserCourses)
                 .HasForeignKey(d => d.IdUser)
-                .HasConstraintName("FK__user_cour__id_us__5006DFF2");
+                .HasConstraintName("FK__user_cour__id_us__07C12930");
         });
 
         OnModelCreatingPartial(modelBuilder);

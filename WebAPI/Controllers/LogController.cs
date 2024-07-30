@@ -18,7 +18,7 @@ public class LogController : Controller
     
     [HttpGet("get/{n}"), Authorize]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IList<Log>> Get(int n = 10)
+    public ActionResult<IEnumerable<Log>> Get(int n = 10)
     {
         try
         {

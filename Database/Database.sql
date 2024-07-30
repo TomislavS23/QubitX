@@ -11,8 +11,8 @@ CREATE TABLE [role]
 -- 1-to-N
 CREATE TABLE course_type
 (
-    id_course_type  INT PRIMARY KEY IDENTITY(1, 1),
-    course_type     VARCHAR(255) UNIQUE
+    id_course_type      INT PRIMARY KEY IDENTITY(1, 1),
+    course_type_title   VARCHAR(255) UNIQUE
 )
 
 -- Tag
@@ -76,7 +76,7 @@ INSERT INTO role(role_type)
 VALUES ('User'),
        ('Admin')
 
-INSERT INTO course_type(course_type)
+INSERT INTO course_type(course_type_title)
 VALUES ('Computer Science'),
        ('Programming'),
        ('Operating Systems'),

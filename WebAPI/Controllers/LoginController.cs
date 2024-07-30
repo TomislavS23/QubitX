@@ -19,7 +19,7 @@ public class LoginController : Controller
     }
     
     [HttpGet("login")]
-    public ActionResult Login(string username, string password)
+    public IActionResult Login(string username, string password)
     {
         try
         {
@@ -39,7 +39,7 @@ public class LoginController : Controller
     }
 
     [HttpPost("register")]
-    public ActionResult Register(string firstName, string lastName, string username, string password, int role)
+    public IActionResult Register(string firstName, string lastName, string username, string password, int role)
     {
         try
         {
