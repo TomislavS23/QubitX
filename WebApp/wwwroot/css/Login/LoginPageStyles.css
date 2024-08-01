@@ -1,0 +1,47 @@
+.login-background
+{
+    background-color: #2d3139;
+}
+
+.nav-link
+{
+    text-decoration: none !important;
+    color: #fff0ff !important;
+}
+
+.nav-link:hover
+{
+    color: #0fd69a !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 5px !important;
+}
+
+.form-control:focus
+{
+    border: 1px solid #0fd69a !important;
+    color: #fff0ff;
+}
+
+.secondary-color
+{
+    color: #0fd69a;
+}
+
+.login-button
+{
+    background-color: #0fd69a;
+    color: #333333;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.375rem 0.75rem;
+}
+
+.login-button:hover
+{
+    /*
+    outline: 2px #0fd69a solid;
+    outline-offset: 2px;
+     */
+    background-color: rgba(15, 214, 154, 0.8);
+}

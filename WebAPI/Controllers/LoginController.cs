@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.DataTransferObjects;
 using WebAPI.Models;
 using WebAPI.Security;
 
@@ -39,17 +40,22 @@ public class LoginController : Controller
     }
 
     [HttpPost("register")]
-    public IActionResult Register(string firstName, string lastName, string username, string password, int role)
+    public IActionResult Register([FromBody] RegisterDTO register)
     {
         try
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
             var user = new User
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Username = username,
-                HashedPassword = HashUtils.ComputeSHA256Hash(password),
-                IdRole = role
+                FirstName = register.FirstName,
+                LastName = register.LastName,
+                Username = register.Username,
+                HashedPassword = HashUtils.ComputeSHA256Hash(register.Password),
+                IdRole = register.Role
             };
 
             var query = _context.Users.Add(user);

@@ -1,5 +1,43 @@
+@model UserViewModel
+
 @{
     Layout = "_UserLayout";
 }
+<form method="post" class="p-3 d-flex">
+    <div class="w-25">
+        <label class="form-label">Filter by course type: </label>
+        <select class="form-select custom-select shadow-none" data-bs-theme="dark">
+            <option selected disabled="disabled" value="">Select...</option>
+            @foreach (var ct in @Model.CourseTypes)
+            {
+                <option value="@ct.IdCourseType">@ct.CourseTypeTitle</option>
+            }
+        </select>
+    </div>
+    <div class="mx-3">
+        <label class="form-label">Filter by tag: </label>
+        <select class="form-select shadow-none" data-bs-theme="dark">
+            <option selected disabled="disabled" value="">Select...</option>
+            @foreach (var t in @Model.Tags)
+            {
+                <option value="@t.IdTag">@t.TagTitle</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label class="form-label">Content Per Page: </label>
+        <select class="form-select shadow-none w-50" data-bs-theme="dark">
+            <option selected disabled="disabled" value="">N</option>
+            <option value="1">10</option>
+            <option value="2">20</option>
+            <option value="3">50</option>
+        </select>
+    </div>
+    <div class="ms-5 d-flex align-items-end">
+        <button type="reset" class="btn btn-outline-danger">Reset</button>
+        <button type="submit" class="btn btn-outline-info ms-3">Submit</button>
+    </div>
+</form>
 
-<h1>hello world</h1>
+
+

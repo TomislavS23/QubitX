@@ -1,0 +1,36 @@
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_BlankLayout";
+}
+
+<div class="d-flex justify-content-center">
+    <form class="login-background p-5" data-bs-theme="dark" asp-controller="Login" asp-action="Login">
+        <div class="d-flex align-items-center justify-content-center">
+            <h1 class="mb-5 fw-bold">Qubit<span class="secondary-color">X</span></h1>
+        </div>
+        <h1 class="mb-3 fw-bold fs-3">Login</h1>
+        <div class="input-group mt-4">
+            <span class="input-group-text" id="basic-addon1">@@</span>
+            <input type="text" class="form-control shadow-none" placeholder="Username" asp-for="Username">
+        </div>
+        <span asp-validation-for="Username" class="text-danger mt-4"></span>
+        <div class="input-group mt-4">
+            <span class="input-group-text" id="basic-addon2">*</span>
+            <input type="password" class="form-control shadow-none" placeholder="Password" asp-for="Password">
+        </div>
+        <span asp-validation-for="Password" class="text-danger mt-4"></span>
+        <div class="d-flex flex-column mt-4">
+            <a asp-controller="Register" asp-action="Index" class="nav-link">Have you registered yet?</a>
+            <button type="submit" class="login-button mt-5">Submit</button>
+        </div>
+
+        @if (ViewData.ModelState.ContainsKey("WrongData"))
+        {
+        <span class="text-danger">
+                @ViewData.ModelState["WrongData"].Errors.Select(e => e.ErrorMessage);
+            </span>
+        }
+    </form>
+</div>

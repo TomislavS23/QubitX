@@ -1,19 +1,21 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using WebApp.Models;
 
 namespace WebApp.Controllers;
 
-public class LoginController : Controller
+public class RegisterController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly HttpClient _httpClient;
 
-    public LoginController(IHttpClientFactory client)
+    public RegisterController(IHttpClientFactory client)
     {
         _httpClientFactory = client;
         _httpClient = _httpClientFactory.CreateClient("httpclient"); 
@@ -21,37 +23,20 @@ public class LoginController : Controller
     
     public IActionResult Index()
     {
-        try
-        {
-            // Check for JWT token
-            var token = User.Claims.FirstOrDefault(c => c.Type == "JWT")?.Value;
-            
-            if (token != null)
-            {
-                var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
-
-                return RedirectToAction("Index", role == "Admin" ? "Admin" : "User");
-            }
-
-            return View();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return View();
     }
     
-    public async Task<IActionResult> Login(string returnUrl, LoginViewModel login)
+    public async Task<IActionResult> Register(RegisterViewModel register)
     {
         try
         {
-            var response = await _httpClient.GetAsync($"api/auth/login?username={login.Username}&password={login.Password}");
+            var json = JsonConvert.SerializeObject(register);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/auth/register", content);
             
             if (!response.IsSuccessStatusCode)
             {
-                // needs fixing
-                return RedirectToAction("Index", login);
+                return RedirectToAction("Index");
             }
             
             // API Response handling
@@ -78,18 +63,8 @@ public class LoginController : Controller
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
-
-            if (returnUrl != null)
-            {
-                return LocalRedirect(returnUrl);   
-            }
-
-            if (tokenData.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "User")
-            {
-                return RedirectToAction("Index", "User");
-            }
             
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "User");
         }
         catch (Exception e)
         {

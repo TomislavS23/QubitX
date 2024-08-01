@@ -1,0 +1,39 @@
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_BlankLayout";
+}
+
+<div class="d-flex justify-content-center">
+    <form class="login-background p-5" data-bs-theme="dark"  asp-controller="Register" asp-action="Register">
+        <div class="d-flex align-items-center justify-content-center">
+            <h1 class="mb-5 fw-bold">Qubit<span class="secondary-color">X</span></h1>
+        </div>
+        <h1 class="mb-3 fw-bold fs-3">Register</h1>
+        <div class="input-group mt-4">
+            <span class="input-group-text custom-icon-width"><i class="fa-solid fa-signature"></i></span>
+            <input type="text" class="form-control shadow-none" placeholder="First Name" asp-for="FirstName">
+        </div>
+        <span asp-validation-for="FirstName" class="text-danger mt-4"></span>
+        <div class="input-group mt-4">
+            <span class="input-group-text custom-icon-width"><i class="fa-solid fa-signature"></i></span>
+            <input type="text" class="form-control shadow-none" placeholder="Last Name" asp-for="LastName">
+        </div>
+        <span asp-validation-for="LastName" class="text-danger mt-4"></span>
+        <div class="input-group mt-4">
+            <span class="input-group-text custom-icon-width"><i class="fa-solid fa-user"></i></span>
+            <input type="text" class="form-control shadow-none" placeholder="Username" asp-for="Username">
+        </div>
+        <span asp-validation-for="Username" class="text-danger mt-4"></span>
+        <div class="input-group mt-4">
+            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+            <input type="password" class="form-control shadow-none" placeholder="Password" asp-for="Password">
+        </div>
+        <span asp-validation-for="Password" class="text-danger mt-4"></span>
+        <div class="d-flex flex-column mt-5">
+            <a asp-controller="Login" asp-action="Index" class="nav-link">Do you have an account?</a>
+            <button type="submit" class="login-button mt-5">Submit</button>
+        </div>
+    </form>
+</div>

@@ -65,7 +65,7 @@ public class TagController : Controller
         }
     }
     
-    [HttpGet("readtags"), Authorize]
+    [HttpGet("readtags")]
     public ActionResult<TagDTO> ReadTags()
     {
         try
