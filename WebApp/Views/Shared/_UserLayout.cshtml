@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="css/LandingPage/LandingPageStyles.css">
         <link rel="stylesheet" href="css/MainPage/OffcanvasStyles.css"/>
         <link rel="stylesheet" href="css/MainPage/MainPageFormStyle.css"/>
+        <link rel="stylesheet" href="css/Course/CoursePreviewStyle.css"/>
     </head>
     <body>
         <nav id="main" class="navbar sticky-top border-bottom" data-bs-theme="dark">
@@ -92,7 +93,7 @@
                 
                 <div class="border-bottom my-2"></div>
 
-                <a href="#" class="custom-offcanvas-link">
+                <a class="custom-offcanvas-link" asp-controller="Course" asp-action="Index">
                     <span><i class="fa-solid fa-pen"></i></span>
                     <span>Create New Course</span>
                 </a>
@@ -129,7 +130,9 @@
         @* ==== SCRIPTS ==== *@
         <script src="lib/bootstrap-5.3.3/js/bootstrap.bundle.min.js"></script>
         <script src="lib/highlightjs/highlight.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="js/live-course-preview.js"></script>
         <script>hljs.highlightAll();</script>
         @await RenderSectionAsync("Scripts", required: false)
     </body>

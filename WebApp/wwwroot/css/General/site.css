@@ -21,3 +21,21 @@ body
     text-wrap: wrap;
     background: none;
 }
+
+/* ======================= */
+/* Custom Scrollbar styles */
+/* ======================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #444;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #0fd69a, #0bb978, #09895b);
+}
