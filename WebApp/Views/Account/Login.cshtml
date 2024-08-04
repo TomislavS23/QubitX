@@ -6,7 +6,7 @@
 }
 
 <div class="d-flex justify-content-center">
-    <form class="login-background p-5" data-bs-theme="dark" asp-controller="Login" asp-action="Login">
+    <form class="login-background p-5" data-bs-theme="dark" asp-controller="Account" asp-action="Login">
         <div class="d-flex align-items-center justify-content-center">
             <h1 class="mb-5 fw-bold">Qubit<span class="secondary-color">X</span></h1>
         </div>
@@ -22,7 +22,7 @@
         </div>
         <span asp-validation-for="Password" class="text-danger mt-4"></span>
         <div class="d-flex flex-column mt-4">
-            <a asp-controller="Register" asp-action="Index" class="nav-link">Have you registered yet?</a>
+            <a asp-controller="Account" asp-action="Register" class="nav-link">Have you registered yet?</a>
             <button type="submit" class="login-button mt-5">Submit</button>
         </div>
 

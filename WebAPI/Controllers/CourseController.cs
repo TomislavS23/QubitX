@@ -21,16 +21,18 @@ public class CourseController : Controller
     
     // CREATE
     [HttpPost("create"), Authorize]
-    public ActionResult CreateCourse(int idUser, int courseType, string courseTitle, string courseContent)
+    public ActionResult CreateCourse([FromBody] CreateCourseDTO data)
     {
         try
         {
+            var user = _context.Users.FirstOrDefault(u => u.Username == data.Username);
+            
             var course = new CourseDTO()
             {
-                IdUser = idUser,
-                IdCourseType = courseType,
-                CourseTitle = courseTitle,
-                CourseContent = courseContent
+                IdUser = user.IdUser,
+                IdCourseType = data.IdCourseType,
+                CourseTitle = data.CourseTitle,
+                CourseContent = data.CourseContent
             };
 
             var result = _mapper.Map<Course>(course);

@@ -48,7 +48,7 @@ public class UserController : Controller
                 CourseTypes = courseTypes
             };
 
-        return View(model);
+            return View(model);
         }
         catch (Exception e)
         {

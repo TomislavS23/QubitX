@@ -19,7 +19,7 @@ body
     line-height: 24px;
     font-size: 13.6px;
     text-wrap: wrap;
-    background: none;
+    background-color: #2d3139;
 }
 
 /* ======================= */
@@ -38,4 +38,33 @@ body
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #0fd69a, #0bb978, #09895b);
+}
+
+/* ======================= */
+/* === MARKDOWN styles === */
+/* ======================= */
+
+#resultdiv
+{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow: auto;
+}
+
+#resultdiv h1
+{
+    border-bottom: 1px solid #fff0ff;
+}
+
+#resultdiv ul, #resultdiv ol {
+    margin-left: 20px;
+}
+
+#resultdiv ul ul, #resultdiv ul ol, #resultdiv ol ul, #resultdiv ol ol {
+    margin-left: 20px;
+}
+
+#resultdiv li {
+    line-height: 0.7;
 }

@@ -33,3 +33,9 @@ window.onload = function()
 {
     display();
 }
+
+function reset()
+{
+    display();
+    console.log("Reset")
+}

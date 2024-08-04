@@ -23,7 +23,40 @@ public class UserController : Controller
         _mapper = mapper;
     }
     
-    // CREATE => User creation is exposed through api/auth/register
+    // READ
+    [HttpGet("read/{id:int}")]
+    public ActionResult<UserDTO> ReadUser(int id)
+    {
+        try
+        {
+            var query = _context.Users.FirstOrDefault(u => u.IdUser == id);
+
+            var result = _mapper.Map<UserDTO>(query);
+
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet("read/{username}")]
+    public ActionResult<UserDTO> ReadUser(string username)
+    {
+        try
+        {
+            var query = _context.Users.FirstOrDefault(u => u.Username == username);
+
+            var result = _mapper.Map<UserDTO>(query);
+
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
     
     // UPDATE
     [HttpPut("update"), Authorize]

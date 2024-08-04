@@ -1,54 +1,20 @@
-body
+main
 {
     height: 100vh;
-    overflow: hidden;
 }
 
 #textbox
 {
     background-color: #2d3139;
     border: none;
-    resize: none !important;
-    height: 100vh !important;
     color: #fff0ff;
+    resize: none;
 }
 
 #textbox:focus
 {
     border: none;
-    outline: 3px solid #0fd69a;
-}
-
-.hljs
-{
-    background-color: #2d3139;
-    font-size: 13.6px;
-}
-
-#resultdiv
-{
-    height: 100vh;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    overflow: auto;
-}
-
-#resultdiv h1
-{
-    border-bottom: 1px solid #fff0ff;
-}
-
-#resultdiv ul, #resultdiv ol {
-    margin-left: 20px;
-}
-
-#resultdiv ul ul, #resultdiv ul ol, #resultdiv ol ul, #resultdiv ol ol {
-    margin-left: 20px;
-}
-
-#resultdiv li {
-    line-height: 0.7;
+    outline: 1px solid #0fd69a;
 }
 
 .fixed-width {
@@ -57,10 +23,7 @@ body
     min-width: 50%;
 }
 
-.info-card
+.h-80
 {
-    background-color: #333333;
-    max-width: 15%;
-    border: 1px solid #0fd69a;
-    padding: 5px;
+    height: 80% !important;
 }

@@ -20,37 +20,6 @@ public class AccountController : Controller
         _httpClient = _httpClientFactory.CreateClient("httpclient"); 
     }
 
-    public async Task<IActionResult> Logout()
-    {
-        try
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        }
-        catch (Exception e)
-        {
-            // TODO: Add proper error page
-            return RedirectToAction("Index", "User");
-        }
-
-        return RedirectToAction("Index", "Home");
-    }
-    
-    public IActionResult Forbidden()
-    {
-        return RedirectToAction("Index", "Home");
-    }
-    
-    //
-    // For some reason code below works but layouts for login and register forms
-    // won't render. Console throws error 404 for every css file in layout used
-    // by those views. If each of views has its own controller where ex.:  
-    // public IActionResult Index() is present instead of public IActionResult Login()
-    // it will render layout and work properly, but if code is done like bellow,
-    // in one controller, it will show blank pages without styles. Issue is
-    // temporarily resolved by separating login and register in separate controllers. 
-    //
-    
-    /*
     public IActionResult Login()
     {
         try
@@ -75,15 +44,16 @@ public class AccountController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> Login(string returnUrl, LoginViewModel login)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Login(string returnUrl, LoginViewModel model)
     {
         try
         {
-            var response = await _httpClient.GetAsync($"api/auth/login?username={login.Username}&password={login.Password}");
+            var response = await _httpClient.GetAsync($"api/auth/login?username={model.Username}&password={model.Password}");
             
             if (!response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index");
+                return View("Login", model);
             }
             
             // API Response handling
@@ -112,9 +82,16 @@ public class AccountController : Controller
                 authProperties);
 
             if (returnUrl != null)
-                return LocalRedirect(returnUrl);
-            else
+            {
+                return LocalRedirect(returnUrl);   
+            }
+
+            if (tokenData.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "User")
+            {
                 return RedirectToAction("Index", "User");
+            }
+            
+            return RedirectToAction("Index", "Admin");
         }
         catch (Exception e)
         {
@@ -129,20 +106,18 @@ public class AccountController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterViewModel register)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register(RegisterViewModel model)
     {
         try
         {
-            var response = await _httpClient.GetAsync(
-                $"api/auth/login?" +
-                $"firstName={register.FirstName}" +
-                $"&lastName={register.LastName}" +
-                $"&username={register.Username}" +
-                $"&password={register.Password}");
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/auth/register", content);
             
             if (!response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index");
+                return View(model);
             }
             
             // API Response handling
@@ -178,5 +153,24 @@ public class AccountController : Controller
             return RedirectToAction("Index", "User");
         }
     }
-    */
+
+    public async Task<IActionResult> Logout()
+    {
+        try
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+        catch (Exception e)
+        {
+            // TODO: Add proper error page
+            return RedirectToAction("Index", "User");
+        }
+
+        return RedirectToAction("Index", "Home");
+    }
+    
+    public IActionResult Forbidden()
+    {
+        return RedirectToAction("Index", "Home");
+    }
 }

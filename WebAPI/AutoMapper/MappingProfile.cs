@@ -20,5 +20,6 @@ public class MappingProfile : Profile
         // Course mappings
         CreateMap<Course, CourseDTO>();
         CreateMap<CourseDTO, Course>();
+        CreateMap<CreateCourseDTO, Course>();
     }
 }

@@ -15,8 +15,8 @@
         
         <link rel="stylesheet" href="~/lib/bootstrap-5.3.3/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="~/lib/highlightjs/styles/atom-one-dark.css"/>
-        <link rel="stylesheet" href="css/General/site.css" asp-append-version="true"/>
-        <link rel="stylesheet" href="css/LandingPage/LandingPageStyles.css"/>
+        <link rel="stylesheet" href="~/css/General/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/LandingPage/LandingPageStyles.css"/>
     </head>
     <body>
         @RenderBody()
@@ -41,7 +41,7 @@
                             <a class="nav-link"  href="#s4">Get Started</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-light ms-5" asp-controller="Login" asp-action="Index">Login</a>
+                            <a class="btn btn-outline-light ms-5" asp-controller="Account" asp-action="Login">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -58,7 +58,7 @@
                             elevate your skills with our comprehensive and accessible learning platform.
                         </h3>
                         <div class="container d-flex justify-content-center align-items-center mt-custom">
-                            <a asp-controller="Login" asp-action="Login" class="section-button ms-3">Login</a>
+                            <a asp-controller="Account" asp-action="Login" class="section-button ms-3">Login</a>
                         </div>
                     </div>
                 </div>
@@ -227,8 +227,8 @@ public IActionResult Details(int? id)
         </footer>
 
         @* ==== SCRIPTS ==== *@
-        <script src="lib/bootstrap-5.3.3/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/highlightjs/highlight.min.js"></script>
+        <script src="~/lib/bootstrap-5.3.3/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/highlightjs/highlight.min.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script>hljs.highlightAll();</script>
         @await RenderSectionAsync("Scripts", required: false)
