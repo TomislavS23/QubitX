@@ -9,4 +9,5 @@ public class CreateCourseDTO
     public string? CourseTitle { get; set; }
 
     public string? CourseContent { get; set; }
+    public IEnumerable<int> Tags { get; set; }
 }

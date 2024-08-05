@@ -22,6 +22,21 @@ body
     background-color: #2d3139;
 }
 
+.primary-color
+{
+    background-color: rgb(35 39 47) !important;
+}
+
+.secondary-color
+{
+    color: #0fd69a !important;
+}
+
+.secondary-color-background
+{
+    background-color: #0fd69a !important;
+}
+
 /* ======================= */
 /* Custom Scrollbar styles */
 /* ======================= */

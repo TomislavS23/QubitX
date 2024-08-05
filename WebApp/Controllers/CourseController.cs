@@ -1,3 +1,5 @@
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,19 +17,24 @@ public class CourseController : Controller
     public CourseController(IHttpClientFactory client)
     {
         _httpClientFactory = client;
-        _httpClient = _httpClientFactory.CreateClient("httpclient"); 
+        _httpClient = _httpClientFactory.CreateClient("httpclient");
     }
     
     public async Task<IActionResult> Upload()
     {
         try
         {
-            var response = await _httpClient.GetAsync("api/coursetypes/read");
-            response.EnsureSuccessStatusCode();
+            var courseResponse = await _httpClient.GetAsync("api/coursetypes/read");
+            courseResponse.EnsureSuccessStatusCode();
 
-            var courseTypes = await response.Content.ReadFromJsonAsync<IEnumerable<CourseTypeViewModel>>();
+            var tagResponse = await _httpClient.GetAsync("api/tag/readtags");
+            tagResponse.EnsureSuccessStatusCode();
+
+            var courseTypes = await courseResponse.Content.ReadFromJsonAsync<IEnumerable<CourseTypeViewModel>>();
+            var tags = await tagResponse.Content.ReadFromJsonAsync<IEnumerable<TagViewModel>>();
 
             ViewBag.CourseTypes = courseTypes;
+            ViewBag.Tags = tags;
 
             return View();
         }
@@ -41,6 +48,26 @@ public class CourseController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Upload(CourseUploadViewModel model)
     {
+        var token = HttpContext.Request.Cookies["JWT"];
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        if (!ModelState.IsValid)
+        {
+            var courseResponse = await _httpClient.GetAsync("api/coursetypes/read");
+            courseResponse.EnsureSuccessStatusCode();
+
+            var tagResponse = await _httpClient.GetAsync("api/tag/readtags");
+            tagResponse.EnsureSuccessStatusCode();
+
+            var courseTypes = await courseResponse.Content.ReadFromJsonAsync<IEnumerable<CourseTypeViewModel>>();
+            var tags = await tagResponse.Content.ReadFromJsonAsync<IEnumerable<TagViewModel>>();
+
+            ViewBag.CourseTypes = courseTypes;
+            ViewBag.Tags = tags;
+            
+            return View(model);
+        }
+        
         try
         {
             var json = JsonConvert.SerializeObject(model);
@@ -49,7 +76,7 @@ public class CourseController : Controller
             
             if (!response.IsSuccessStatusCode)
             {
-                return View(model);
+                return View();
             }
             
             return RedirectToAction("Index", "User");

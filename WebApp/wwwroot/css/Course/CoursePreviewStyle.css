@@ -19,11 +19,9 @@ main
 
 .fixed-width {
     flex: 0 0 100%;
-    max-width: 50%;
-    min-width: 50%;
 }
 
-.h-80
+.h-90
 {
-    height: 80% !important;
+    height: 90% !important;
 }

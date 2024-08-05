@@ -21,16 +21,6 @@
     color: rgb(153 161 179);
 }
 
-.primary-color
-{
-    background-color: rgb(35 39 47) !important;
-}
-
-.secondary-color
-{
-    color: #0fd69a !important;
-}
-
 .secondary-sector-body
 {
     background: conic-gradient(from 90deg at -10% 100%,#2b303b 0deg,#2b303b 90deg,#16181d 1turn) fixed;

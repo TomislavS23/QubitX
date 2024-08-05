@@ -4,11 +4,14 @@ namespace WebApp.Models;
 
 public class CourseUploadViewModel
 {
+    public string Username { get; set; }
     [Required(ErrorMessage = "Your course should have course type!")]
-    public int CourseType { get; set; }
+    public int IdCourseType { get; set; }
     [Required(ErrorMessage = "Please enter the title of your course!")]
-    public string Title { get; set; }
+    public string CourseTitle { get; set; }
     
     [Required(ErrorMessage = "Your course should have content!")]
-    public string Content { get; set; }    
+    public string CourseContent { get; set; }
+
+    public IList<int> Tags { get; set; }
 }

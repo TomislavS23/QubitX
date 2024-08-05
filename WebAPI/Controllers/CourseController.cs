@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using WebAPI.DataTransferObjects;
 using WebAPI.Models;
 
@@ -38,6 +39,21 @@ public class CourseController : Controller
             var result = _mapper.Map<Course>(course);
 
             _context.Courses.Add(result);
+            _context.SaveChanges();
+
+            if (!data.Tags.IsNullOrEmpty())
+            {
+                var createdCourse = _context.Courses.FirstOrDefault(c => c.CourseTitle == data.CourseTitle);
+                foreach (var tag in data.Tags)
+                {
+                    _context.CourseTags.Add(new CourseTag
+                    {
+                        IdCourse = createdCourse.IdCourse,
+                        IdTag = _context.Tags.FirstOrDefault(t => t.IdTag == tag).IdTag
+                    });
+                }
+            }
+            
             _context.SaveChanges();
 
             return Ok();

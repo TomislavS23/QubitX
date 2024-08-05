@@ -80,6 +80,13 @@ public class AccountController : Controller
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
+            
+            HttpContext.Response.Cookies.Append("JWT", responseContent, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict
+            });
 
             if (returnUrl != null)
             {
@@ -144,6 +151,13 @@ public class AccountController : Controller
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
+            
+            HttpContext.Response.Cookies.Append("JWT", responseContent, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict
+            });
             
             return RedirectToAction("Index", "User");
         }

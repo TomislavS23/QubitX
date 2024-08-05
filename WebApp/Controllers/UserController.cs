@@ -14,13 +14,8 @@ public class UserController : Controller
     {
         _httpClientFactory = client;
         _httpClient = _httpClientFactory.CreateClient("httpclient"); 
-        
-        // var token = HttpContext.Request.Cookies["JWT"];
-        // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
-
     
-    // GET => /main
     [Route("/main")]
     public async Task<IActionResult> Index()
     {
