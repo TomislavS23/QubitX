@@ -1,14 +1,13 @@
 namespace WebAPI.DataTransferObjects;
 
-public class CourseDTO
+public class CreateCourseDTO
 {
-    public int IdCourse { get; set; }
-
-    public int? IdUser { get; set; }
+    public string? Username { get; set; }
 
     public int? IdCourseType { get; set; }
 
     public string? CourseTitle { get; set; }
 
     public string? CourseContent { get; set; }
+    public IEnumerable<int> Tags { get; set; }
 }
