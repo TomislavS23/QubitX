@@ -4,8 +4,6 @@ namespace WebApp.Models;
 
 public class CourseUploadViewModel
 {
-    public string Username { get; set; }
-    [Required(ErrorMessage = "Your course should have course type!")]
     public int IdCourseType { get; set; }
     [Required(ErrorMessage = "Please enter the title of your course!")]
     public string CourseTitle { get; set; }

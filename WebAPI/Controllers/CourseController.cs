@@ -22,41 +22,24 @@ public class CourseController : Controller
     
     // CREATE
     [HttpPost("create"), Authorize]
-    public ActionResult CreateCourse([FromBody] CreateCourseDTO data)
+    public ActionResult CreateCourse([FromBody] CourseDTO course)
     {
         try
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == data.Username);
-            
-            var course = new CourseDTO()
+            var obj = new CourseDTO()
             {
-                IdUser = user.IdUser,
-                IdCourseType = data.IdCourseType,
-                CourseTitle = data.CourseTitle,
-                CourseContent = data.CourseContent
+                IdUser = course.IdUser,
+                IdCourseType = course.IdCourseType,
+                CourseTitle = course.CourseTitle,
+                CourseContent = course.CourseContent
             };
 
-            var result = _mapper.Map<Course>(course);
+            var result = _mapper.Map<Course>(obj);
 
             _context.Courses.Add(result);
             _context.SaveChanges();
 
-            if (!data.Tags.IsNullOrEmpty())
-            {
-                var createdCourse = _context.Courses.FirstOrDefault(c => c.CourseTitle == data.CourseTitle);
-                foreach (var tag in data.Tags)
-                {
-                    _context.CourseTags.Add(new CourseTag
-                    {
-                        IdCourse = createdCourse.IdCourse,
-                        IdTag = _context.Tags.FirstOrDefault(t => t.IdTag == tag).IdTag
-                    });
-                }
-            }
-            
-            _context.SaveChanges();
-
-            return Ok();
+            return Ok(result.IdCourse);
         }
         catch (Exception e)
         {
@@ -83,7 +66,7 @@ public class CourseController : Controller
         }
     }
     
-    [HttpGet("readcourses"), Authorize]
+    [HttpGet("read-courses"), Authorize]
     public ActionResult<IEnumerable<CourseDTO>> ReadCourses()
     {
         try

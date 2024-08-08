@@ -83,7 +83,7 @@ public class TagController : Controller
     }
     
     [HttpPut("update"), Authorize(Roles = "Admin")]
-    public ActionResult<TagDTO> UpdateTag(int id, string newTitle = null)
+    public ActionResult<TagDTO> UpdateTag(int id, string newTitle)
     {
         try
         {

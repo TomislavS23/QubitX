@@ -110,10 +110,8 @@ public class UserController : Controller
             _context.RemoveRange(courses);
 
             _context.SaveChanges();
-            
-            var result = _mapper.Map<UserDTO>(query);
 
-            return Ok(result);
+            return Ok();
         }
         catch (Exception e)
         {

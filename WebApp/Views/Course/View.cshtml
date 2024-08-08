@@ -1,0 +1,20 @@
+@model ViewCourseViewModel
+
+@{
+    Layout = "_UserLayout";
+}
+
+@* TODO: Add markdown support *@
+
+
+<div class="container">
+    <h1 class="mt-3 fw-bold">
+        @Model.Course.CourseTitle
+    </h1>
+    <div class="mb-5 fs-4">
+        Made by: <span class="secondary-color">@Model.User.Username</span>
+    </div>
+    <p>
+        @Model.Course.CourseContent
+    </p>
+</div>

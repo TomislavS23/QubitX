@@ -1,11 +1,9 @@
-@using System.Security.Claims
 @model CourseUploadViewModel
 
 @{
     Layout = "_CourseFormLayout";
     var courseTypes = ViewBag.CourseTypes as List<CourseTypeViewModel>;
     var tags = ViewBag.Tags as List<TagViewModel>;
-    var username = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
 }
 
 <div class="container-fluid d-flex justify-content-center align-items-center h-100">
@@ -17,7 +15,6 @@
                 </div>
                 <div class="card-body">
                     <form method="post" class="h-100 d-flex justify-content-center" asp-controller="Course" asp-action="Upload">
-                        <input type="text" value="@username" asp-for="Username" class="d-none">
                         <div class="w-75">
                             <div class="input-group" data-bs-theme="dark">
                                 <span class="input-group-text" id="basic-addon1">Title</span>

@@ -84,7 +84,7 @@ public class CourseTypeController : Controller
 
     // DELETE
     [HttpDelete("delete")]
-    public ActionResult<CourseTypeDTO> DeleteCourseType(int id)
+    public ActionResult DeleteCourseType(int id)
     {
         try
         {
@@ -95,10 +95,8 @@ public class CourseTypeController : Controller
             _context.Courses.RemoveRange(courses);
 
             _context.SaveChanges();
-
-            var result = _mapper.Map<CourseTypeDTO>(query);
             
-            return Ok(result);
+            return Ok();
         }
         catch (Exception e)
         {

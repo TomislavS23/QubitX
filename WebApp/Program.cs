@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using WebApp.AutoMapper;
 
 namespace WebApp;
 
@@ -10,6 +11,9 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        
+        // AutoMapper support
+        builder.Services.AddAutoMapper(typeof(MappingProfile));
 
         builder.Services.AddHttpClient("httpclient", client =>
         {
