@@ -1,11 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using WebAPI.DataTransferObjects;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers;
 
@@ -13,11 +16,15 @@ public class AccountController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly HttpClient _httpClient;
+    private readonly IApiService _apiService;
+    private readonly IMapper _mapper;
 
-    public AccountController(IHttpClientFactory client)
+    public AccountController(IHttpClientFactory client, IApiService service, IMapper mapper)
     {
         _httpClientFactory = client;
-        _httpClient = _httpClientFactory.CreateClient("httpclient"); 
+        _httpClient = _httpClientFactory.CreateClient("httpclient");
+        _apiService = service;
+        _mapper = mapper;
     }
 
     public IActionResult Login()
@@ -49,23 +56,14 @@ public class AccountController : Controller
     {
         try
         {
-            var response = await _httpClient.GetAsync($"api/auth/login?username={model.Username}&password={model.Password}");
-            
-            if (!response.IsSuccessStatusCode)
-            {
-                return View("Login", model);
-            }
-            
-            // API Response handling
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var response = await _apiService.LoginAsync(model.Username, model.Password);
             var handler = new JwtSecurityTokenHandler();
-            var tokenData = handler.ReadJwtToken(responseContent);
+            var tokenData = handler.ReadJwtToken(response);
             
-
             // Cookie creation
             var claims = new List<Claim>
             {
-                new Claim("JWT", responseContent),
+                new Claim("JWT", response),
                 new Claim(ClaimTypes.Name, tokenData.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value),
                 new Claim(ClaimTypes.Role, tokenData.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value)
             };
@@ -81,7 +79,7 @@ public class AccountController : Controller
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
             
-            HttpContext.Response.Cookies.Append("JWT", responseContent, new CookieOptions
+            HttpContext.Response.Cookies.Append("JWT", response, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,
@@ -118,25 +116,16 @@ public class AccountController : Controller
     {
         try
         {
-            var json = JsonConvert.SerializeObject(model);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("api/auth/register", content);
-            
-            if (!response.IsSuccessStatusCode)
-            {
-                return View(model);
-            }
-            
             // API Response handling
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var response = await _apiService.RegisterAsync(_mapper.Map<RegisterDTO>(model));
             var handler = new JwtSecurityTokenHandler();
-            var tokenData = handler.ReadJwtToken(responseContent);
+            var tokenData = handler.ReadJwtToken(response);
             
 
             // Cookie creation
             var claims = new List<Claim>
             {
-                new Claim("JWT", responseContent),
+                new Claim("JWT", response),
                 new Claim(ClaimTypes.Name, tokenData.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value),
                 new Claim(ClaimTypes.Role, tokenData.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value)
             };
@@ -152,7 +141,7 @@ public class AccountController : Controller
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
             
-            HttpContext.Response.Cookies.Append("JWT", responseContent, new CookieOptions
+            HttpContext.Response.Cookies.Append("JWT", response, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,

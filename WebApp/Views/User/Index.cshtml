@@ -49,9 +49,12 @@
                         <h5 class="card-title secondary-color fw-bold">@course.CourseTitle</h5>
                         <p class="card-text fw-bold">@course.CourseTypeTitle</p>
                         <div>
-                            @foreach (var ct in course.Tags)
+                            @if (course.Tags != null)
                             {
-                                <span class="badge text-bg-info secondary-color-background">@Model.Tags.FirstOrDefault(t => t.IdTag == ct.IdTag).TagTitle</span>
+                                @foreach (var ct in course.Tags)
+                                {
+                                    <span class="badge text-bg-info secondary-color-background">@Model.Tags.FirstOrDefault(t => t.IdTag == ct.IdTag).TagTitle</span>
+                                }
                             }
                         </div>
                         <!-- Button trigger modal -->

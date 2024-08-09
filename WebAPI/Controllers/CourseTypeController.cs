@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DataTransferObjects;
 using WebAPI.Models;
@@ -19,7 +20,7 @@ public class CourseTypeController : Controller
     }
 
     // CREATE
-    [HttpPost("create")]
+    [HttpPost("create"), Authorize]
     public ActionResult CreateCourseType(string title)
     {
         try
@@ -40,7 +41,7 @@ public class CourseTypeController : Controller
     }
 
     // READ
-    [HttpGet("read")]
+    [HttpGet("read"), Authorize]
     public ActionResult<IEnumerable<CourseTypeDTO>> ReadCourseTypes()
     {
         try
@@ -58,7 +59,7 @@ public class CourseTypeController : Controller
     }
 
     // UPDATE
-    [HttpPut("update")]
+    [HttpPut("update"), Authorize]
     public ActionResult<CourseTypeDTO> UpdateCourseType(int id, string newTitle = null)
     {
         try

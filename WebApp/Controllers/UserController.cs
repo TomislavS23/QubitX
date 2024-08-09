@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DataTransferObjects;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers;
 
@@ -12,13 +13,15 @@ public class UserController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly HttpClient _httpClient;
+    private readonly IApiService _apiService;
     private readonly IMapper _mapper;
 
-    public UserController(IHttpClientFactory client, IMapper mapper)
+    public UserController(IHttpClientFactory client, IMapper mapper, IApiService apiService)
     {
         _httpClientFactory = client;
         _httpClient = _httpClientFactory.CreateClient("httpclient");
         _mapper = mapper;
+        _apiService = apiService;
     }
     
     [Route("/main")]
@@ -29,24 +32,12 @@ public class UserController : Controller
         
         try
         {
-            var responseTags = await _httpClient.GetAsync("api/tag/readtags");
-            responseTags.EnsureSuccessStatusCode();
-            
-            var responseCourseTypes = await _httpClient.GetAsync("api/coursetypes/read");
-            responseCourseTypes.EnsureSuccessStatusCode();
+            var tags = await _apiService.GetTagsAsync(token);
+            var courseTypes = await _apiService.GetCourseTypesAsync(token);
+            var courses = await _apiService.GetCoursesAsync(token);
+            var courseTags = await _apiService.GetCourseTags(token);
 
-            var responseCourses = await _httpClient.GetAsync("api/course/read-courses");
-            responseCourses.EnsureSuccessStatusCode();
-
-            var responseCourseTag = await _httpClient.GetAsync("api/course-tag/read");
-            responseCourseTag.EnsureSuccessStatusCode();
-
-            var tags = await responseTags.Content.ReadFromJsonAsync<IEnumerable<TagViewModel>>();
-            var courseTypes = await responseCourseTypes.Content.ReadFromJsonAsync<IEnumerable<CourseTypeViewModel>>();
-            var courses = await responseCourses.Content.ReadFromJsonAsync<IEnumerable<CourseDTO>>();
-            var courseTags = await responseCourseTag.Content.ReadFromJsonAsync<IEnumerable<CourseTagDTO>>();
-
-            var courseVM = _mapper.Map<IEnumerable<CourseViewModel>>(courses);
+            var courseVM = _mapper.Map<IList<CourseViewModel>>(courses);
 
             foreach (var course in courseVM)
             {
@@ -65,8 +56,8 @@ public class UserController : Controller
 
             var model = new UserViewModel
             {
-                Tags = tags,
-                CourseTypes = courseTypes,
+                Tags = _mapper.Map<IList<TagViewModel>>(tags),
+                CourseTypes = _mapper.Map<IList<CourseTypeViewModel>>(tags),
                 Courses = courseVM
             };
 

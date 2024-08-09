@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using WebApp.AutoMapper;
+using WebApp.Services;
 
 namespace WebApp;
 
@@ -14,6 +15,9 @@ public class Program
         
         // AutoMapper support
         builder.Services.AddAutoMapper(typeof(MappingProfile));
+        
+        // IApiService
+        builder.Services.AddScoped<IApiService, ApiService>();
 
         builder.Services.AddHttpClient("httpclient", client =>
         {

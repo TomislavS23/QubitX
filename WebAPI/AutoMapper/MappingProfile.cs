@@ -21,8 +21,13 @@ public class MappingProfile : Profile
         CreateMap<Course, CourseDTO>();
         CreateMap<CourseDTO, Course>();
         
+        
         // CourseTag mappings
         CreateMap<CourseTag, CourseTagDTO>();
         CreateMap<CourseTagDTO, CourseTag>();
+        
+        // UserCourse mappings
+        CreateMap<UserCourse, UserCourseDTO>();
+        CreateMap<UserCourseDTO, UserCourse>();
     }
 }

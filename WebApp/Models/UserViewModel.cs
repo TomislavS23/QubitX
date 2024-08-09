@@ -2,7 +2,7 @@ namespace WebApp.Models;
 
 public class UserViewModel
 {
-    public IEnumerable<TagViewModel> Tags { get; set; }
-    public IEnumerable<CourseTypeViewModel> CourseTypes { get; set; }
-    public IEnumerable<CourseViewModel> Courses { get; set; }
+    public IList<TagViewModel> Tags { get; set; }
+    public IList<CourseTypeViewModel> CourseTypes { get; set; }
+    public IList<CourseViewModel> Courses { get; set; }
 }
