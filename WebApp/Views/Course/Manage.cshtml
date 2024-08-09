@@ -1,0 +1,38 @@
+@model UserViewModel
+
+@{
+    Layout = "_UserLayout";
+}
+
+<table class="table container mt-5 p-2" data-bs-theme="dark">
+    <thead>
+    <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Type</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var course in @Model.Courses)
+    {
+        <tr>
+            <td><a asp-controller="Course" asp-action="View" asp-route-courseID="@course.IdCourse">@course.CourseTitle</a></td>
+            <td>@course.CourseTypeTitle</td>
+            <td>
+                @if (course.Tags != null)
+                {
+                    @foreach (var ct in course.Tags)
+                    {
+                        <span class="badge text-bg-info secondary-color-background">@Model.Tags.FirstOrDefault(t => t.IdTag == ct.IdTag).TagTitle</span>
+                    }
+                }
+            </td>
+            <td>
+                <a asp-controller="Course" asp-action="Edit" asp-route-id="@course.IdCourse"><i class="fa-solid fa-pen secondary-color fa-lg"></i></a>
+                <a asp-controller="Course" asp-action="Delete" asp-route-id="@course.IdCourse"><i class="fa-solid fa-trash text-danger fa-lg ms-3"></i></a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

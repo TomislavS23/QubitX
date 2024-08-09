@@ -1,9 +1,8 @@
 using System.Collections;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
-using WebAPI.DataTransferObjects;
+using WebApp.DataTransferObjects;
 
 namespace WebApp.Services;
 
@@ -53,10 +52,39 @@ public class ApiService : IApiService
         return await response.Content.ReadFromJsonAsync<IList<CourseDTO>>();
     }
 
-    public async Task<IList<CourseTypeDTO>> GetCourseTypesAsync(string token)
+    public async Task<IList<CourseDTO>> GetCoursesCreatedByUser(string token, int idUser)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var response = await _httpClient.GetAsync("api/course/read-courses");
+        response.EnsureSuccessStatusCode();
+        
+        var result = await response.Content.ReadFromJsonAsync<IList<CourseDTO>>();
+
+        return result.Where(r => r.IdUser == idUser).ToList();
+    }
+
+    public async Task EditCourse(string token, CourseDTO data)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var json = JsonConvert.SerializeObject(data);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        
+        await _httpClient.PutAsync("api/course/update", content);
+    }
+
+    public async Task DeleteCourse(string token, int id)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+        var response = await _httpClient.DeleteAsync($"api/course/delete?id={id}");
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<IList<CourseTypeDTO>> GetCourseTypesAsync(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         
         var response = await _httpClient.GetAsync("api/coursetypes/read");
         response.EnsureSuccessStatusCode();
@@ -122,6 +150,16 @@ public class ApiService : IApiService
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task<IList<UserCourseDTO>> GetUserCoursesAsync(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.GetAsync("api/user-course/read");
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<IList<UserCourseDTO>>();
+    }
+
     public async Task<IList<CourseTagDTO>> GetCourseTags(string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -129,5 +167,25 @@ public class ApiService : IApiService
         var response = await _httpClient.GetAsync("api/course-tag/read");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<IList<CourseTagDTO>>();
+    }
+
+    public async Task<IList<CourseTagDTO>> GetCourseTagsForCourse(string token, int idCourse)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var response = await _httpClient.GetAsync("api/course-tag/read");
+        response.EnsureSuccessStatusCode();
+
+        var result = await response.Content.ReadFromJsonAsync<IList<CourseTagDTO>>();
+
+        return result.Where(ct => ct.IdCourse == idCourse).ToList();
+    }
+
+    public async Task DeleteCourseTags(string token, int idCourse)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.DeleteAsync($"api/course-tag/delete/{idCourse}");
+        response.EnsureSuccessStatusCode();
     }
 }

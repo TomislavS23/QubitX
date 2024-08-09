@@ -37,6 +37,11 @@ body
     background-color: #0fd69a !important;
 }
 
+.no-background
+{
+    background: transparent !important;
+}
+
 /* ======================= */
 /* Custom Scrollbar styles */
 /* ======================= */

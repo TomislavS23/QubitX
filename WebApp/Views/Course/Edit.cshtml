@@ -1,0 +1,81 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebApp.DataTransferObjects
+@model CourseUploadViewModel
+
+@{
+    Layout = "_CourseFormLayout";
+    var courseTypes = ViewBag.CourseTypes as List<CourseTypeViewModel>;
+    var tags = ViewBag.Tags as List<TagViewModel>;
+    var courseTags = ViewBag.CourseTags as List<CourseTagDTO>;
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center h-100">
+    <div class="row w-100 h-100 mt-3">
+        <div class="col h-100">
+            <div class="card h-90" data-bs-theme="dark">
+                <div class="card-header secondary-color fw-bold">
+                    Form
+                </div>
+                <div class="card-body">
+                    <form method="post" class="h-100 d-flex justify-content-center" asp-controller="Course" asp-action="Edit">
+                        <input type="hidden" value="@Model.IdCourse" asp-for="IdCourse">
+                        <div class="w-75">
+                            <div class="input-group" data-bs-theme="dark">
+                                <span class="input-group-text" id="basic-addon1">Title</span>
+                                <input type="text" class="form-control shadow-none" placeholder="Write your course title here..." asp-for="CourseTitle">
+                            </div>
+                            <span asp-validation-for="CourseTitle" class="text-danger"></span>
+                            <select class="form-select my-3" aria-label="Default select example" asp-for="IdCourseType">
+                                @foreach (var c in courseTypes)
+                                {
+                                    if (c.IdCourseType == @Model.IdCourseType)
+                                    {
+                                        <option value="@c.IdCourseType" selected="selected">@c.CourseTypeTitle</option>
+                                    }
+
+                                    <option value="@c.IdCourseType">@c.CourseTypeTitle</option>
+                                }
+                            </select>
+                            <span asp-validation-for="IdCourseType" class="text-danger"></span>
+                            <textarea asp-for="CourseContent" id="textbox" class="p-3 w-100 h-75 form-control shadow-none" placeholder="Write your content here..."></textarea>
+                            <span asp-validation-for="CourseContent" class="text-danger"></span>
+                            <div class="mt-3">
+                                <button class="btn btn-outline-danger" asp-controller="Course" asp-action="Manage">Cancel Changes</button>
+                                <button type="submit" class="btn btn btn-outline-info ms-3">Submit</button>
+                            </div>
+                        </div>
+                        <div class="dropdown ms-5" data-bs-theme="dark">
+                            <button class="btn secondary-color-background dropdown-toggle text-black" type="button" data-bs-toggle="dropdown">
+                                Choose Tags
+                            </button>
+                            <ul class="dropdown-menu h-50 overflow-y-auto">
+                                @foreach (var tag in tags)
+                                {
+                                    var matchingCourseTag = courseTags.FirstOrDefault(ct => ct.IdTag == tag.IdTag);
+                                    bool isChecked = matchingCourseTag != null;
+
+                                    <div class="dropdown-item">
+                                        <input class="form-check-input ms-3" type="checkbox" name="Tags" value="@tag.IdTag" id="defaultCheck_@tag.IdTag" @(isChecked ? "checked=\"checked\"" : "")>
+                                        <label class="form-check-label" for="defaultCheck_@tag.IdTag">
+                                            @tag.TagTitle
+                                        </label>
+                                    </div>
+                                }
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col h-100">
+            <div class="card h-90" data-bs-theme="dark">
+                <div class="card-header secondary-color fw-bold">
+                    Live Preview
+                </div>
+                <div class="card-body overflow-auto">
+                    <div id="resultdiv" class="p-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

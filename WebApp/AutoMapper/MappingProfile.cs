@@ -1,5 +1,5 @@
 using AutoMapper;
-using WebAPI.DataTransferObjects;
+using WebApp.DataTransferObjects;
 using WebApp.Models;
 
 namespace WebApp.AutoMapper;

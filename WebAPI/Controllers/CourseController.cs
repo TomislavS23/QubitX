@@ -85,30 +85,19 @@ public class CourseController : Controller
     
     // UPDATE
     [HttpPut("update"), Authorize]
-    public ActionResult<CourseDTO> UpdateCourse(int id, int courseType, string courseTitle = null,
-        string courseContent = null)
+    public ActionResult<CourseDTO> UpdateCourse([FromBody] CourseDTO data)
     {
         try
         {
-            var query = _context.Courses.FirstOrDefault(c => c.IdCourse == id);
+            var query = _context.Courses.FirstOrDefault(c => c.IdCourse == data.IdCourse);
 
-            query.IdCourseType = courseType;
-
-            if (query != null && courseTitle != null)
-            {
-                query.CourseTitle = courseTitle;
-            }
-
-            if (query != null && courseContent != null)
-            {
-                query.CourseContent = courseContent;
-            }
-
-            _context.SaveChanges();
+            query.IdCourseType = data.IdCourseType;
+            query.CourseTitle = data.CourseTitle;
+            query.CourseContent = data.CourseContent;
             
-            var result = _mapper.Map<CourseDTO>(query);
+            _context.SaveChanges();
 
-            return Ok(result);
+            return Ok();
         }
         catch (Exception e)
         {

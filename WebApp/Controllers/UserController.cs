@@ -1,8 +1,7 @@
-using System.Net.Http.Headers;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.DataTransferObjects;
+using WebApp.DataTransferObjects;
 using WebApp.Models;
 using WebApp.Services;
 
@@ -28,7 +27,6 @@ public class UserController : Controller
     public async Task<IActionResult> Index()
     {
         var token = HttpContext.Request.Cookies["JWT"];
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         
         try
         {
@@ -57,7 +55,7 @@ public class UserController : Controller
             var model = new UserViewModel
             {
                 Tags = _mapper.Map<IList<TagViewModel>>(tags),
-                CourseTypes = _mapper.Map<IList<CourseTypeViewModel>>(tags),
+                CourseTypes = _mapper.Map<IList<CourseTypeViewModel>>(courseTypes),
                 Courses = courseVM
             };
 

@@ -74,4 +74,22 @@ public class CourseTagController : Controller
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpDelete("delete/{id}")]
+    public ActionResult DeleteCourseTags(int id)
+    {
+        try
+        {
+            var query = _context.CourseTags.Where(ct => ct.IdCourse == id);
+            _context.CourseTags.RemoveRange(query);
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-namespace WebAPI.DataTransferObjects;
+namespace WebApp.DataTransferObjects;
 
 public class UserCourseDTO
 {
