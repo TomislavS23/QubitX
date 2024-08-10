@@ -12,15 +12,11 @@ namespace WebApp.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly HttpClient _httpClient;
     private readonly IApiService _apiService;
     private readonly IMapper _mapper;
 
-    public AccountController(IHttpClientFactory client, IApiService service, IMapper mapper)
+    public AccountController(IApiService service, IMapper mapper)
     {
-        _httpClientFactory = client;
-        _httpClient = _httpClientFactory.CreateClient("httpclient");
         _apiService = service;
         _mapper = mapper;
     }

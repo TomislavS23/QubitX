@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Main";
     var username = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+    var role = Context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 }
 
 <!DOCTYPE html>
@@ -40,11 +41,18 @@
                             <a class="nav-link" asp-controller="User" asp-action="Index">Main Page</a>
                         </li>
                         
+                        @if (role == "Admin")
+                        {
+                            <li class="nav-item ms-3">
+                                <a class="nav-link" asp-controller="Admin" asp-action="Index">Administration</a>
+                            </li>
+                        }
+                        
                         <div class="nav-item border h-100 mx-3"></div>
 
-                        <form class="d-flex align-items-center">
+                        <form class="d-flex align-items-center" asp-controller="User" asp-action="Search">
                             <div class="input-group">
-                                <input type="text" class="form-control shadow-none" placeholder="Search courses...">
+                                <input type="text" class="form-control shadow-none" placeholder="Search courses..." name="title">
                                 <button class="btn btn-outline-info" type="submit" id="button-addon2">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
@@ -82,7 +90,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body d-flex flex-column pt-0">
-                <a href="#" class="custom-offcanvas-link">
+                <a class="custom-offcanvas-link" asp-controller="Profile" asp-action="ProfileDetails">
                     <span><i class="fa-regular fa-user"></i></span>
                     <span>Your Profile</span>
                 </a>
@@ -118,6 +126,26 @@
                     <span><i class="fa-solid fa-users-gear"></i></span>
                     <span>QubitX Community (Soon)</span>
                 </a>
+
+                @if (role == "Admin")
+                {
+                <div class="border-bottom my-2"></div>
+
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-book-open"></i></span>
+                    <span>Admin Something</span>
+                </a>
+
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-book-open"></i></span>
+                    <span>Admin Something</span>
+                </a>
+
+                <a href="#" class="custom-offcanvas-link">
+                    <span><i class="fa-solid fa-book-open"></i></span>
+                    <span>Admin Something</span>
+                </a>
+                }
 
                 <div class="border-bottom mb-4 mt-2"></div>
                 <a class="custom-offcanvas-link" asp-controller="Account" asp-action="Logout">

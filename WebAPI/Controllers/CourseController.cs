@@ -66,12 +66,46 @@ public class CourseController : Controller
         }
     }
     
+    [HttpGet("read/{title}"), Authorize]
+    public ActionResult<CourseDTO> ReadCourse(string title)
+    {
+        try
+        {
+            var query = _context.Courses.FirstOrDefault(c => c.CourseTitle == title);
+
+            var result = _mapper.Map<CourseDTO>(query);
+            
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
     [HttpGet("read-courses"), Authorize]
     public ActionResult<IEnumerable<CourseDTO>> ReadCourses()
     {
         try
         {
             var query = _context.Courses.ToList();
+            
+            var result = _mapper.Map<IEnumerable<CourseDTO>>(query);
+            
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet("read-courses/{title}"), Authorize]
+    public ActionResult<IEnumerable<CourseDTO>> ReadCourses(string title)
+    {
+        try
+        {
+            var query = _context.Courses.Where(obj => obj.CourseTitle.Contains(title)).ToList();
             
             var result = _mapper.Map<IEnumerable<CourseDTO>>(query);
             

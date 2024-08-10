@@ -66,4 +66,38 @@ public class UserController : Controller
             return RedirectToAction("Index", "Home");
         }
     }
+    
+    public async Task<IActionResult> Search(string title)
+    {
+        var token = HttpContext.Request.Cookies["JWT"];
+        try
+        {
+            var courses = await _apiService.GetCoursesAsync(token, title);
+            var courseTypes = await _apiService.GetCourseTypesAsync(token);
+            var courseTags = await _apiService.GetCourseTags(token);
+
+            var model = _mapper.Map<IList<CourseViewModel>>(courses);
+
+            foreach (var course in model)
+            {
+                course.CourseTypeTitle = courseTypes.FirstOrDefault(ct => ct.IdCourseType == course.IdCourseType).CourseTypeTitle;
+                
+                if (course.Tags == null)
+                {
+                    course.Tags = new List<CourseTagDTO>();
+                }
+                
+                foreach (var ct in courseTags.Where(ct => ct.IdCourse == course.IdCourse))
+                {
+                    course.Tags.Add(ct);
+                }
+            }
+
+            return View(model);
+        }
+        catch (Exception e)
+        {
+            return RedirectToAction("Index", "User");
+        }
+    }
 }

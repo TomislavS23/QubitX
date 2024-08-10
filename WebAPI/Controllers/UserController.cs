@@ -60,32 +60,21 @@ public class UserController : Controller
     
     // UPDATE
     [HttpPut("update"), Authorize]
-    public ActionResult<UserDTO> UpdateUser(int id, string firstName = null, string lastName = null, string userName = null)
+    public ActionResult<UserDTO> UpdateUser([FromBody] UserDTO data)
     {
         try
         {
-            var query = _context.Users.FirstOrDefault(u => u.IdUser == id);
+            var query = _context.Users.FirstOrDefault(u => u.IdUser == data.IdUser);
 
-            if (firstName != null && query.FirstName != firstName)
-            {
-                query.FirstName = firstName;
-            }
-            
-            if (lastName != null && query.LastName != lastName)
-            {
-                query.LastName = lastName;
-            }
-            
-            if (lastName != null && query.Username != userName)
-            {
-                query.Username = userName;
-            }
+            query.FirstName = data.FirstName;
+            query.LastName = data.LastName;
+            query.Username = data.Username;
 
             var result = _mapper.Map<UserDTO>(query);
 
             _context.SaveChanges();
 
-            return Ok(result);
+            return Ok();
 
         }
         catch (Exception e)

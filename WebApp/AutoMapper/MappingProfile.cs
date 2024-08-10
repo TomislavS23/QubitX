@@ -21,5 +21,8 @@ public class MappingProfile : Profile
 
         CreateMap<RegisterViewModel, RegisterDTO>();
         CreateMap<RegisterDTO, RegisterViewModel>();
+
+        CreateMap<UserDTO, ProfileViewModel>();
+        CreateMap<ProfileViewModel, UserDTO>();
     }
 }

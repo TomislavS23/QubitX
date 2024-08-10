@@ -1,0 +1,70 @@
+@using System.Security.Claims
+@model ProfileViewModel
+
+@{
+    Layout = "_CourseFormLayout";
+    var role = ViewContext.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+}
+
+<div class="container mt-5 d-flex flex-column align-items-center justify-content-center">
+    <div>
+        <i class="fa-solid fa-user fa-10x"></i>
+    </div>
+    <div class="mt-5 fw-bold w-25">
+        <div class="input-group mb-3" data-bs-theme="dark">
+            <span class="input-group-text">First Name</span>
+            <p type="text" class="form-control mb-0" id="FirstName">@Model.FirstName</p>
+        </div>
+        <div class="input-group mb-3" data-bs-theme="dark">
+            <span class="input-group-text">Last Name</span>
+            <p type="text" class="form-control mb-0" id="LastName">@Model.LastName</p>
+        </div>
+        <div class="input-group mb-3" data-bs-theme="dark">
+            <span class="input-group-text">Username</span>
+            <p type="text" class="form-control mb-0" id="Username">@Model.Username</p>
+        </div>
+        <div class="input-group mb-3" data-bs-theme="dark">
+            <span class="input-group-text">Role</span>
+            <p type="text" class="form-control mb-0">@role</p>
+        </div>
+    </div>
+    <div class="w-25 mt-3">
+        <div>
+            <button class="btn btn-outline-info" onclick="RefreshProfile(@Model.IdUser)">Refresh</button>
+            <button type="button" class="btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="FillProfileModal()">
+                Edit Profile
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-theme="dark">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit your profile</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">First Name</span>
+                        <input type="text" class="form-control shadow-none" id="FirstNameInput" placeholder="First Name">
+                    </div>
+                </form>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Last Name</span>
+                    <input type="text" class="form-control shadow-none" id="LastNameInput" placeholder="Last Name">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Username</span>
+                    <input type="text" class="form-control shadow-none" id="UsernameInput" placeholder="Username">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-success" onclick="SubmitChanges(@Model.IdUser)">Submit Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

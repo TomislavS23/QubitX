@@ -43,6 +43,15 @@ public class ApiService : IApiService
         return await response.Content.ReadFromJsonAsync<CourseDTO>();
     }
 
+    public async Task<IList<CourseDTO>> GetCoursesAsync(string token, string title)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var response = await _httpClient.GetAsync($"api/course/read-courses/{title}");
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<IList<CourseDTO>>();
+    }
+
     public async Task<IList<CourseDTO>> GetCoursesAsync(string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -118,6 +127,15 @@ public class ApiService : IApiService
         var response = await _httpClient.GetAsync($"api/user/read/{userId}");
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<UserDTO>();
+    }
+
+    public async Task PutUserAsync(string token, UserDTO data)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var json = JsonConvert.SerializeObject(data);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        await _httpClient.PutAsync("api/user/update", content);
     }
 
     public async Task PostUserCourseAsync(string token, UserCourseDTO userCourse)

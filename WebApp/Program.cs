@@ -27,7 +27,7 @@ public class Program
         builder.Services.AddAuthentication()
             .AddCookie(options =>
             {
-                options.LoginPath = "/Login/Login";
+                options.LoginPath = "/Account/Login";
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
             });
