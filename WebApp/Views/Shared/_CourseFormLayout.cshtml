@@ -45,7 +45,7 @@
                         @if (role == "Admin")
                         {
                             <li class="nav-item ms-3">
-                                <a class="nav-link" asp-controller="Admin" asp-action="Index">Administration</a>
+                                <a class="nav-link" asp-controller="Admin" asp-action="Manage">Administration</a>
                             </li>
                         }
                         
@@ -131,20 +131,25 @@
                 @if (role == "Admin")
                 {
                     <div class="border-bottom my-2"></div>
+
+                    <a class="custom-offcanvas-link" asp-controller="Admin" asp-action="Manage">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Manage Courses</span>
+                    </a>
+
+                    <a class="custom-offcanvas-link" asp-controller="CourseTypes" asp-action="Index">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Manage Course Types</span>
+                    </a>
+
+                    <a class="custom-offcanvas-link" asp-controller="Tag" asp-action="Index">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Manage Tags</span>
+                    </a>
                     
-                    <a href="#" class="custom-offcanvas-link">
-                        <span><i class="fa-solid fa-book-open"></i></span>
-                        <span>Admin Something</span>
-                    </a>
-
-                    <a href="#" class="custom-offcanvas-link">
-                        <span><i class="fa-solid fa-book-open"></i></span>
-                        <span>Admin Something</span>
-                    </a>
-
-                    <a href="#" class="custom-offcanvas-link">
-                        <span><i class="fa-solid fa-book-open"></i></span>
-                        <span>Admin Something</span>
+                    <a class="custom-offcanvas-link" asp-controller="Log" asp-action="Index">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Logs</span>
                     </a>
                 }
 

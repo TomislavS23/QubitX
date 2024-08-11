@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.DataTransferObjects;
+using WebApp.DataTransferObject;
 using WebApp.Models;
 using WebApp.Services;
 
@@ -32,7 +32,11 @@ public class AccountController : Controller
             {
                 var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
 
-                return RedirectToAction("Index", role == "Admin" ? "Admin" : "User");
+                if (role == "User")
+                {
+                    return RedirectToAction("Index", "User");
+                }
+                return RedirectToAction("Manage", "Admin"); 
             }
 
             return View();
@@ -90,7 +94,7 @@ public class AccountController : Controller
                 return RedirectToAction("Index", "User");
             }
             
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Manage", "Admin");
         }
         catch (Exception e)
         {
@@ -149,6 +153,11 @@ public class AccountController : Controller
             // TODO: Add proper error page
             return RedirectToAction("Index", "User");
         }
+    }
+    
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 
     public async Task<IActionResult> Logout()

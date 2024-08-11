@@ -1,16 +1,24 @@
+@using System.Security.Claims
 @model IEnumerable<CourseViewModel>
 
 @{
     Layout = "_CourseFormLayout";
+    var role = ViewContext.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
 }
 
-<div class="container navbar-nav mt-5">
+<div class="container navbar-nav d-flex flex-row justify-content-between mt-5 border-bottom">
     <li class="nav-item">
         <a class="nav-link" asp-controller="User" asp-action="Index"><i class="fa-solid fa-arrow-left"></i> Return to home</a>
     </li>
+    @if (role == "Admin")
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Admin" asp-action="Manage">Return to admin page <i class="fa-solid fa-arrow-right"></i></a>
+        </li>
+    }
 </div>
 
-<div class="container mt-2 p-0">
+<div class="container mt-5 p-0">
     <div class="row">
         @foreach (var course in @Model)
         {

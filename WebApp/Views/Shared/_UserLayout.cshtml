@@ -44,20 +44,34 @@
                         @if (role == "Admin")
                         {
                             <li class="nav-item ms-3">
-                                <a class="nav-link" asp-controller="Admin" asp-action="Index">Administration</a>
+                                <a class="nav-link" asp-controller="Admin" asp-action="Manage">Administration</a>
                             </li>
                         }
                         
                         <div class="nav-item border h-100 mx-3"></div>
 
-                        <form class="d-flex align-items-center" asp-controller="User" asp-action="Search">
-                            <div class="input-group">
-                                <input type="text" class="form-control shadow-none" placeholder="Search courses..." name="title">
-                                <button class="btn btn-outline-info" type="submit" id="button-addon2">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
-                        </form>
+                        @if (role == "User")
+                        {
+                            <form class="d-flex align-items-center" asp-controller="User" asp-action="Search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control shadow-none" placeholder="Search courses..." name="title">
+                                    <button class="btn btn-outline-info" type="submit" id="button-addon2">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <form class="d-flex align-items-center" asp-controller="Admin" asp-action="Search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control shadow-none" placeholder="Search courses..." name="title">
+                                    <button class="btn btn-outline-info" type="submit" id="button-addon2">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        }
 
                         <div class="nav-item border h-100 mx-3"></div>
                         
@@ -129,22 +143,27 @@
 
                 @if (role == "Admin")
                 {
-                <div class="border-bottom my-2"></div>
+                    <div class="border-bottom my-2"></div>
 
-                <a href="#" class="custom-offcanvas-link">
-                    <span><i class="fa-solid fa-book-open"></i></span>
-                    <span>Admin Something</span>
-                </a>
+                    <a class="custom-offcanvas-link" asp-controller="Admin" asp-action="Manage">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Manage Courses</span>
+                    </a>
 
-                <a href="#" class="custom-offcanvas-link">
-                    <span><i class="fa-solid fa-book-open"></i></span>
-                    <span>Admin Something</span>
-                </a>
+                    <a class="custom-offcanvas-link" asp-controller="CourseTypes" asp-action="Index">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Manage Course Types</span>
+                    </a>
 
-                <a href="#" class="custom-offcanvas-link">
-                    <span><i class="fa-solid fa-book-open"></i></span>
-                    <span>Admin Something</span>
-                </a>
+                    <a class="custom-offcanvas-link" asp-controller="Tag" asp-action="Index">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Manage Tags</span>
+                    </a>
+
+                    <a class="custom-offcanvas-link" asp-controller="Log" asp-action="Index">
+                        <span><i class="fa-solid fa-user-secret"></i></span>
+                        <span>Logs</span>
+                    </a>
                 }
 
                 <div class="border-bottom mb-4 mt-2"></div>

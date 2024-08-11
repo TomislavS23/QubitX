@@ -103,8 +103,8 @@ VALUES ('C#'), ('ASP.NET'), ('EF'), ('C'),
 
 
 INSERT INTO [user](first_name, last_name, username, hashed_password, id_role) VALUES
-('jon', 'snow', 'user', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 1),
-('eddard', 'stark', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 2)
+('jon', 'snow', 'user', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 1), -- PASS: user
+('eddard', 'stark', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 2) -- PASS: admin
 
 INSERT INTO course (id_user, id_course_type, course_title, course_content) VALUES
 (1, 1, 'Introduction to Programming', 'In this course, you will learn the fundamentals of programming including basic concepts such as variables, data types, control structures, and algorithms. The course is designed for beginners and will help you build a strong foundation in programming. Practical exercises and examples will guide you through the learning process.'),
@@ -134,3 +134,73 @@ INSERT INTO course (id_user, id_course_type, course_title, course_content) VALUE
 (1, 7, 'Advanced Web Development', 'Dive deeper into web development with advanced topics including single-page applications, progressive web apps, and modern front-end frameworks. This course will help you build sophisticated web applications and understand complex web technologies.'),
 (2, 8, 'Introduction to DevOps', 'Learn the principles and practices of DevOps, including continuous integration, continuous deployment, and infrastructure as code. This course covers the DevOps lifecycle, tools, and strategies for improving collaboration between development and operations teams.'),
 (1, 9, 'Introduction to Quantum Computing', 'Explore the basics of quantum computing, including quantum bits, quantum gates, and quantum algorithms. This course provides an overview of quantum computing principles and potential applications, and introduces tools and frameworks for quantum programming.');
+
+-- Course 1: 'Introduction to Programming'
+INSERT INTO course_tag (id_course, id_tag) VALUES (1, 8); -- HTML
+INSERT INTO course_tag (id_course, id_tag) VALUES (1, 9); -- CSS
+INSERT INTO course_tag (id_course, id_tag) VALUES (1, 10); -- JS
+
+-- Course 2: 'Advanced Data Structures'
+INSERT INTO course_tag (id_course, id_tag) VALUES (2, 4); -- C++
+INSERT INTO course_tag (id_course, id_tag) VALUES (2, 21); -- SQL
+
+-- Course 3: 'Web Development Basics'
+INSERT INTO course_tag (id_course, id_tag) VALUES (3, 8); -- HTML
+INSERT INTO course_tag (id_course, id_tag) VALUES (3, 9); -- CSS
+INSERT INTO course_tag (id_course, id_tag) VALUES (3, 10); -- JS
+
+-- Course 4: 'Machine Learning 101'
+INSERT INTO course_tag (id_course, id_tag) VALUES (4, 27); -- ML
+INSERT INTO course_tag (id_course, id_tag) VALUES (4, 29); -- NN
+
+-- Course 5: 'Database Management Systems'
+INSERT INTO course_tag (id_course, id_tag) VALUES (5, 21); -- SQL
+INSERT INTO course_tag (id_course, id_tag) VALUES (5, 22); -- PostgreSQL
+INSERT INTO course_tag (id_course, id_tag) VALUES (5, 23); -- MongoDB
+
+-- Course 6: 'Network Security Fundamentals'
+INSERT INTO course_tag (id_course, id_tag) VALUES (6, 24); -- T-SQL
+INSERT INTO course_tag (id_course, id_tag) VALUES (6, 30); -- Git
+
+-- Course 7: 'Operating Systems Overview'
+INSERT INTO course_tag (id_course, id_tag) VALUES (7, 1); -- C#
+
+-- Course 8: 'Introduction to Algorithms'
+INSERT INTO course_tag (id_course, id_tag) VALUES (8, 4); -- C++
+
+-- Course 9: 'Cloud Computing Essentials'
+INSERT INTO course_tag (id_course, id_tag) VALUES (9, 33); -- Cloud
+
+-- Course 10: 'Modern JavaScript Techniques'
+INSERT INTO course_tag (id_course, id_tag) VALUES (10, 10); -- JS
+
+-- Course 11: 'Introduction to Data Science'
+INSERT INTO course_tag (id_course, id_tag) VALUES (11, 27); -- ML
+INSERT INTO course_tag (id_course, id_tag) VALUES (11, 32); -- Python
+
+-- Course 12: 'Building RESTful APIs'
+INSERT INTO course_tag (id_course, id_tag) VALUES (12, 10); -- JS
+INSERT INTO course_tag (id_course, id_tag) VALUES (12, 30); -- Git
+
+-- Course 13: 'Cybersecurity Principles'
+INSERT INTO course_tag (id_course, id_tag) VALUES (13, 26); -- Security
+
+-- Course 14: 'Big Data Technologies'
+INSERT INTO course_tag (id_course, id_tag) VALUES (14, 21); -- SQL
+INSERT INTO course_tag (id_course, id_tag) VALUES (14, 22); -- PostgreSQL
+INSERT INTO course_tag (id_course, id_tag) VALUES (14, 23); -- MongoDB
+
+-- Course 15: 'Software Engineering Best Practices'
+INSERT INTO course_tag (id_course, id_tag) VALUES (15, 1); -- C#
+INSERT INTO course_tag (id_course, id_tag) VALUES (15, 4); -- C++
+
+-- Course 16: 'Human-Computer Interaction'
+INSERT INTO course_tag (id_course, id_tag) VALUES (16, 8); -- HTML
+INSERT INTO course_tag (id_course, id_tag) VALUES (16, 9); -- CSS
+
+-- Course 17: 'Game Development Basics'
+INSERT INTO course_tag (id_course, id_tag) VALUES (17, 4); -- C++
+INSERT INTO course_tag (id_course, id_tag) VALUES (17, 11); -- Unreal Engine
+
+-- Course 18: 'Introduction to Quantum Computing'
+INSERT INTO course_tag (id_course, id_tag) VALUES (18, 31); -- Quantum Computing

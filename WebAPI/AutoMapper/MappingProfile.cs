@@ -13,6 +13,7 @@ public class MappingProfile : Profile
         
         // Tag mappings
         CreateMap<Tag, TagDTO>();
+        CreateMap<TagDTO, Tag>();
         
         // CourseTypes mappings
         CreateMap<CourseType, CourseTypeDTO>();
@@ -29,5 +30,9 @@ public class MappingProfile : Profile
         // UserCourse mappings
         CreateMap<UserCourse, UserCourseDTO>();
         CreateMap<UserCourseDTO, UserCourse>();
+        
+        // Log mappings
+        CreateMap<LogDTO, Log>();
+        CreateMap<Log, LogDTO>();
     }
 }

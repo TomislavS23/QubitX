@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
-using WebApp.DataTransferObjects;
+using WebApp.DataTransferObject;
 
 namespace WebApp.Services;
 
@@ -101,6 +100,34 @@ public class ApiService : IApiService
         return await response.Content.ReadFromJsonAsync<IList<CourseTypeDTO>>();
     }
 
+    public async Task PostCourseType(string token, CourseTypeDTO data)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var payload = JsonConvert.SerializeObject(data);
+        var content = new StringContent(payload, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/coursetypes/create", content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task PutCourseType(string token, CourseTypeDTO data)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var payload = JsonConvert.SerializeObject(data);
+        var content = new StringContent(payload, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PutAsync("api/coursetypes/update", content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteCourseType(string token, int id)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.DeleteAsync($"api/coursetypes/delete?id={id}");
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<IList<TagDTO>> GetTagsAsync(string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -109,6 +136,34 @@ public class ApiService : IApiService
         response.EnsureSuccessStatusCode();
         
         return await response.Content.ReadFromJsonAsync<IList<TagDTO>>();
+    }
+
+    public async Task PostTag(string token, TagDTO data)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var payload = JsonConvert.SerializeObject(data);
+        var content = new StringContent(payload, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/tag/create", content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task PutTag(string token, TagDTO data)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var payload = JsonConvert.SerializeObject(data);
+        var content = new StringContent(payload, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PutAsync("api/tag/update", content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteTag(string token, int id)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.DeleteAsync($"api/tag/delete?id={id}");
+        response.EnsureSuccessStatusCode();
     }
 
     public async Task<UserDTO> GetUserAsync(string token, string username)
@@ -204,6 +259,43 @@ public class ApiService : IApiService
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         var response = await _httpClient.DeleteAsync($"api/course-tag/delete/{idCourse}");
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<IList<LogDTO>> GetLogs(string token, int count)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.GetAsync($"api/logs/get/{count}");
+
+        return await response.Content.ReadFromJsonAsync<IList<LogDTO>>();
+    }
+
+    public async Task<IList<LogDTO>> GetLogsDefault(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.GetAsync($"api/logs/get/10");
+
+        return await response.Content.ReadFromJsonAsync<IList<LogDTO>>();
+    }
+
+    public async Task<int> GetLogCount(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var response = await _httpClient.GetAsync("api/logs/count");
+
+        return await response.Content.ReadFromJsonAsync<int>();
+    }
+
+    public async Task PostLog(string token, LogDTO data)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var payload = JsonConvert.SerializeObject(data);
+        var content = new StringContent(payload, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/logs/create", content);
         response.EnsureSuccessStatusCode();
     }
 }

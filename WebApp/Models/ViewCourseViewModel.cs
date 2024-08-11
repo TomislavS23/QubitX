@@ -1,4 +1,4 @@
-using WebApp.DataTransferObjects;
+using WebApp.DataTransferObject;
 
 namespace WebApp.Models;
 

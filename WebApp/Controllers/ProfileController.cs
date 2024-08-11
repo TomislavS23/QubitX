@@ -2,7 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using WebApp.DataTransferObjects;
+using WebApp.DataTransferObject;
 using WebApp.Models;
 using WebApp.Services;
 

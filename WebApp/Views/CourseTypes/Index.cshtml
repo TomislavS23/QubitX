@@ -1,0 +1,83 @@
+@model IList<CourseTypeViewModel>
+
+@{
+    Layout = "_UserLayout";
+}
+
+<div class="container mt-5">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-theme="dark">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add new course type</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form asp-controller="CourseTypes" asp-action="Add">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Title</span>
+                            <input type="text" class="form-control shadow-none" placeholder="Course type title" name="title">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-outline-success">Submit Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table container p-2 mt-3" data-bs-theme="dark">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var ct in @Model)
+    {
+        <tr>
+            <td>@ct.IdCourseType</td>
+            <td>@ct.CourseTypeTitle</td>
+            <td>
+                <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-@ct.IdCourseType">
+                    <i class="fa-solid fa-pen secondary-color fa-lg"></i>
+                </a>
+                <a asp-controller="CourseTypes" asp-action="Delete" asp-route-id="@ct.IdCourseType"><i class="fa-solid fa-trash text-danger fa-lg ms-3"></i></a>
+            </td>
+        </tr>
+
+        <div class="modal fade" id="staticBackdrop-@ct.IdCourseType" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-theme="dark">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">You are currently editing course type: @ct.CourseTypeTitle with id: @ct.IdCourseType</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form asp-controller="CourseTypes" asp-action="Edit">
+                        <input type="hidden" value="@ct.IdCourseType" name="id">
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Title</span>
+                                <input type="text" class="form-control shadow-none" id="FirstNameInput" value="@ct.CourseTypeTitle" placeholder="title" name="title">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-outline-success">Submit Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+    </tbody>
+</table>

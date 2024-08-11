@@ -1,18 +1,27 @@
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ViewCourseViewModel
 
 @{
     Layout = "_UserLayout";
+    var role = ViewContext.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
 }
 
 @* TODO: Add markdown support *@
 
-<div class="container navbar-nav mt-5">
+<div class="container navbar-nav d-flex flex-row justify-content-between mt-5 border-bottom">
     <li class="nav-item">
         <a class="nav-link" asp-controller="Course" asp-action="Learning"><i class="fa-solid fa-arrow-left"></i> Return to learning</a>
     </li>
+    @if (role == "Admin")
+    {
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Admin" asp-action="Manage">Return to admin page <i class="fa-solid fa-arrow-right"></i></a>
+    </li>
+    }
 </div>
 
-<div class="container p-0">
+<div class="container p-0 mt-5">
     <h1 class="fw-bold">
         @Model.Course.CourseTitle
     </h1>

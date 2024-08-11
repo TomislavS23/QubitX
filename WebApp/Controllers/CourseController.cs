@@ -3,7 +3,7 @@ using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.DataTransferObjects;
+using WebApp.DataTransferObject;
 using WebApp.Models;
 using WebApp.Services;
 
@@ -63,13 +63,28 @@ public class CourseController : Controller
             var courseId = await _apiService.PostCourse(token, course);
             var courseTags = model.Tags.Select(tag => new CourseTagDTO { IdCourse = courseId, IdTag = tag }).ToList();
 
-            _apiService.PostCourseTag(token, courseTags);
+            await _apiService.PostCourseTag(token, courseTags);
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 3,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"User with ID={course.IdUser} created new course with Title={course.CourseTitle}"
+            });
             
             return RedirectToAction("Index", "User");
         }
         catch (Exception e)
         {
-            // TODO: Add proper error page
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/Upload caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             return RedirectToAction("Index", "User");
         }
     }
@@ -93,6 +108,16 @@ public class CourseController : Controller
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/View caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             return RedirectToAction("Index", "User");
         }
     }
@@ -122,11 +147,28 @@ public class CourseController : Controller
             };
 
             await _apiService.PostUserCourseAsync(token, userCourse);
+            
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 5,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"User with ID={initiator.IdUser} has enrolled course with Title={course.CourseTitle}"
+            });
 
             return View(model);
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/ViewAndEnroll caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             return RedirectToAction("Index", "User");
         }
     }
@@ -175,6 +217,16 @@ public class CourseController : Controller
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/Learning caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             return RedirectToAction("Index", "User");
         }
     }
@@ -215,11 +267,28 @@ public class CourseController : Controller
                 CourseTypes = _mapper.Map<IList<CourseTypeViewModel>>(courseTypes),
                 Courses = courseVM
             };
+            
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 4,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"User with ID={user.IdUser} is trying to manage created courses."
+            });
 
             return View(model);
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/Manage caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             return RedirectToAction("Index", "User");
         }
     }
@@ -227,14 +296,33 @@ public class CourseController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         var token = HttpContext.Request.Cookies["JWT"];
+        var username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
         try
         {
             await _apiService.DeleteCourse(token, id);
+            var user = await _apiService.GetUserAsync(token, username);
+            
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"User with ID={user.IdUser} has deleted course with ID={id}"
+            });
             
             return RedirectToAction("Manage");
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/Delete caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             return RedirectToAction("Index", "User");
         }
     }
@@ -254,10 +342,27 @@ public class CourseController : Controller
 
             ViewBag.CourseTags = courseTags;
             
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 3,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"User with ID={course.IdUser} is trying to edit course with ID={course.IdCourse}"
+            });
+            
             return View(model);
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/Edit caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             return RedirectToAction("Index", "User");
         }
     }
@@ -266,6 +371,7 @@ public class CourseController : Controller
     public async Task<IActionResult> Edit(CourseUploadViewModel model)
     {
         var token = HttpContext.Request.Cookies["JWT"];
+        var username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
         try
         {
             if (!ModelState.IsValid)
@@ -278,12 +384,20 @@ public class CourseController : Controller
             try
             {
                 var course = _mapper.Map<CourseDTO>(model);
+                var user = await _apiService.GetUserAsync(token, username);
 
                 await _apiService.EditCourse(token, course);
                 
                 var courseTags = model.Tags.Select(tag => new CourseTagDTO { IdCourse = model.IdCourse, IdTag = tag }).ToList();
                 await _apiService.DeleteCourseTags(token, course.IdCourse);
                 await _apiService.PostCourseTag(token, courseTags);
+                
+                await _apiService.PostLog(token, new LogDTO
+                {
+                    LogLevel = 4,
+                    LogTimestamp = DateTime.Now.ToUniversalTime(),
+                    LogMessage = $"User with ID={user.IdUser} has edited course ID={course.IdCourse}"
+                });
             
                 return RedirectToAction("Manage", "Course");
             }
@@ -295,21 +409,41 @@ public class CourseController : Controller
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Course/Edit caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
             return RedirectToAction("Index", "User");
         }
     }
 
     private async Task PrepareData()
     {
+        var token = HttpContext.Request.Cookies["JWT"];
+        
         try
         {
-            var token = HttpContext.Request.Cookies["JWT"];
 
             ViewBag.CourseTypes = _mapper.Map<IEnumerable<CourseTypeViewModel>>(await _apiService.GetCourseTypesAsync(token));
             ViewBag.Tags = _mapper.Map<IEnumerable<TagViewModel>>(await _apiService.GetTagsAsync(token));
         }
         catch (Exception e)
         {
+            await _apiService.PostLog(token, new LogDTO
+            {
+                LogLevel = 1,
+                LogTimestamp = DateTime.Now.ToUniversalTime(),
+                LogMessage = $"Method PrepareData has caught an exception:" +
+                             $"Stack Trace: {e.Source}" +
+                             $"Stack Trace: {e.StackTrace}" +
+                             $"Message: {e.Message}"
+            });
+            
             Console.WriteLine(e.Message);
         }
     }

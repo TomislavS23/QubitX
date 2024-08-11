@@ -1,0 +1,76 @@
+@model UserViewModel
+
+@{
+    Layout = "_UserLayout";
+}
+
+<form method="post" class="p-3 d-flex">
+    <div class="w-25">
+        <label class="form-label">Filter by course type: </label>
+        <select class="form-select custom-select shadow-none" data-bs-theme="dark">
+            <option selected disabled="disabled" value="">Select...</option>
+            @foreach (var ct in @Model.CourseTypes)
+            {
+            <option value="@ct.IdCourseType">@ct.CourseTypeTitle</option>
+            }
+        </select>
+    </div>
+    <div class="mx-3">
+        <label class="form-label">Filter by tag: </label>
+        <select class="form-select shadow-none" data-bs-theme="dark">
+            <option selected disabled="disabled" value="">Select...</option>
+            @foreach (var t in @Model.Tags)
+            {
+            <option value="@t.IdTag">@t.TagTitle</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label class="form-label">Content Per Page: </label>
+        <select class="form-select shadow-none w-50" data-bs-theme="dark">
+            <option selected disabled="disabled" value="">N</option>
+            <option value="1">10</option>
+            <option value="2">20</option>
+            <option value="3">50</option>
+        </select>
+    </div>
+    <div class="ms-5 d-flex align-items-end">
+        <button type="reset" class="btn btn-outline-danger">Reset</button>
+        <button type="submit" class="btn btn-outline-info ms-3">Submit</button>
+    </div>
+</form>
+
+<table class="table container mt-5 p-2" data-bs-theme="dark">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Type</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var course in @Model.Courses)
+    {
+        <tr>
+            <td>@course.IdCourse</td>
+            <td><a asp-controller="Course" asp-action="View" asp-route-courseID="@course.IdCourse">@course.CourseTitle</a></td>
+            <td>@course.CourseTypeTitle</td>
+            <td>
+                @if (course.Tags != null)
+                {
+                    @foreach (var ct in course.Tags)
+                    {
+                        <span class="badge text-bg-info secondary-color-background">@Model.Tags.FirstOrDefault(t => t.IdTag == ct.IdTag).TagTitle</span>
+                    }
+                }
+            </td>
+            <td>
+                <a asp-controller="Admin" asp-action="Edit" asp-route-id="@course.IdCourse"><i class="fa-solid fa-pen secondary-color fa-lg"></i></a>
+                <a asp-controller="Admin" asp-action="Delete" asp-route-id="@course.IdCourse"><i class="fa-solid fa-trash text-danger fa-lg ms-3"></i></a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

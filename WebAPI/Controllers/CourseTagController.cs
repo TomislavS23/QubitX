@@ -75,7 +75,7 @@ public class CourseTagController : Controller
         }
     }
 
-    [HttpDelete("delete/{id}")]
+    [HttpDelete("delete/{id}"), Authorize]
     public ActionResult DeleteCourseTags(int id)
     {
         try

@@ -24,7 +24,7 @@ public class UserController : Controller
     }
     
     // READ
-    [HttpGet("read/{id:int}")]
+    [HttpGet("read/{id:int}"), Authorize]
     public ActionResult<UserDTO> ReadUser(int id)
     {
         try
@@ -41,7 +41,7 @@ public class UserController : Controller
         }
     }
     
-    [HttpGet("read/{username}")]
+    [HttpGet("read/{username}"), Authorize]
     public ActionResult<UserDTO> ReadUser(string username)
     {
         try

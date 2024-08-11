@@ -21,20 +21,14 @@ public class TagController : Controller
     }
     
     [HttpPost("create"), Authorize(Roles = "Admin")]
-    public ActionResult<TagDTO> CreateTag(string tagTitle)
+    public ActionResult<TagDTO> CreateTag([FromBody] TagDTO data)
     {
         try
         {
-            var tag = new Tag
-            {
-                TagTitle = tagTitle
-            };
+            var tag = _mapper.Map<Tag>(data);
             
             var query = _context.Tags.Add(tag);
-            Console.WriteLine(tag.IdTag);
-
             _context.SaveChanges();
-            Console.WriteLine(tag.IdTag);
 
             var result = _mapper.Map<TagDTO>(tag);
 
@@ -83,16 +77,12 @@ public class TagController : Controller
     }
     
     [HttpPut("update"), Authorize(Roles = "Admin")]
-    public ActionResult<TagDTO> UpdateTag(int id, string newTitle)
+    public ActionResult<TagDTO> UpdateTag(TagDTO data)
     {
         try
         {
-            var query = _context.Tags.FirstOrDefault(t => t.IdTag == id);
-
-            if (query != null && newTitle != null)
-            {
-                query.TagTitle = newTitle;
-            }
+            var query = _context.Tags.FirstOrDefault(t => t.IdTag == data.IdTag);
+            query.TagTitle = data.TagTitle;
             
             _context.SaveChanges();
 

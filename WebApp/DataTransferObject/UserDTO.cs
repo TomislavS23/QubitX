@@ -1,4 +1,4 @@
-namespace WebApp.DataTransferObjects;
+namespace WebApp.DataTransferObject;
 
 public class UserDTO
 {

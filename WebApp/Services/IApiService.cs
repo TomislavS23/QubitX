@@ -1,5 +1,4 @@
-using System.Collections;
-using WebApp.DataTransferObjects;
+using WebApp.DataTransferObject;
 
 namespace WebApp.Services;
 
@@ -19,9 +18,15 @@ public interface IApiService
     
     // CourseTypes
     Task<IList<CourseTypeDTO>> GetCourseTypesAsync(string token);
+    Task PostCourseType(string token, CourseTypeDTO data);
+    Task PutCourseType(string token, CourseTypeDTO data);
+    Task DeleteCourseType(string token, int id);
     
     // TAG
     Task<IList<TagDTO>> GetTagsAsync(string token);
+    Task PostTag(string token, TagDTO data);
+    Task PutTag(string token, TagDTO data);
+    Task DeleteTag(string token, int id);
     
     // USER
     Task<UserDTO> GetUserAsync(string token, string username);
@@ -38,4 +43,10 @@ public interface IApiService
     Task<IList<CourseTagDTO>> GetCourseTags(string token);
     Task<IList<CourseTagDTO>> GetCourseTagsForCourse(string token, int idCourse);
     Task DeleteCourseTags(string token, int idCourse);
+    
+    // LOG
+    Task<IList<LogDTO>> GetLogs(string token, int count);
+    Task<IList<LogDTO>> GetLogsDefault(string token);
+    Task<int> GetLogCount(string token);
+    Task PostLog(string token, LogDTO data);
 }

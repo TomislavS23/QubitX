@@ -21,13 +21,13 @@ public class CourseTypeController : Controller
 
     // CREATE
     [HttpPost("create"), Authorize]
-    public ActionResult CreateCourseType(string title)
+    public ActionResult CreateCourseType([FromBody] CourseTypeDTO data)
     {
         try
         {
             var query = _context.CourseTypes.Add(new CourseType
             {
-                CourseTypeTitle = title
+                CourseTypeTitle = data.CourseTypeTitle
             });
 
             _context.SaveChanges();
@@ -60,16 +60,13 @@ public class CourseTypeController : Controller
 
     // UPDATE
     [HttpPut("update"), Authorize]
-    public ActionResult<CourseTypeDTO> UpdateCourseType(int id, string newTitle = null)
+    public ActionResult<CourseTypeDTO> UpdateCourseType([FromBody] CourseTypeDTO data)
     {
         try
         {
-            var obj = _context.CourseTypes.FirstOrDefault(ct => ct.IdCourseType == id);
+            var obj = _context.CourseTypes.FirstOrDefault(ct => ct.IdCourseType == data.IdCourseType);
 
-            if (obj != null && newTitle != null)
-            {
-                obj.CourseTypeTitle = newTitle;
-            }
+            obj.CourseTypeTitle = data.CourseTypeTitle;
 
             _context.SaveChanges();
 
@@ -89,11 +86,21 @@ public class CourseTypeController : Controller
     {
         try
         {
+            var courses = _context.Courses.Where(c => c.IdCourseType == id).ToList();
+
+            foreach (var course in courses)
+            {
+                var courseTags = _context.CourseTags.Where(ct => ct.IdCourse == course.IdCourse);
+                _context.RemoveRange(courseTags);
+
+                var userCourse = _context.UserCourses.Where(uc => uc.IdCourse == course.IdCourse);
+                _context.RemoveRange(userCourse);
+            }
+            
+            _context.Courses.RemoveRange(courses);
+            
             var query = _context.CourseTypes.FirstOrDefault(ct => ct.IdCourseType == id);
             _context.CourseTypes.Remove(query);
-
-            var courses = _context.Courses.Where(c => c.IdCourseType == id);
-            _context.Courses.RemoveRange(courses);
 
             _context.SaveChanges();
             
