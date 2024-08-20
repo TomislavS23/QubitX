@@ -1,0 +1,64 @@
+@using WebApp.Enums
+@model IList<LogViewModel>
+
+@{
+Layout = "_UserLayout";
+var count = ViewBag.Count;
+}
+
+<div class="container mt-5">
+    <form class="d-flex" asp-controller="Log" asp-action="Display">
+        <div>
+            <label for="exampleFormControlInput1" class="form-label">Number of logs:</label>
+            <input type="number" class="form-control shadow-none" id="exampleFormControlInput1" placeholder="number" data-bs-theme="dark" name="n">
+        </div>
+        <div class="ms-5 d-flex align-items-end">
+            <button type="reset" class="btn btn-outline-danger">Reset</button>
+            <button type="submit" class="btn btn-outline-info ms-3">Submit</button>
+        </div>
+    </form>
+
+    <a class="btn btn-outline-info mt-3" asp-controller="Log" asp-action="Display">Display last 10 logs</a>
+
+    <p class="mt-5">There are <span class="text-info">@count</span> logs currently in the database.</p>
+</div>
+
+<table class="table container mt-3 p-2" data-bs-theme="dark">
+    <thead>
+    <tr>
+        <th scope="col">Timestamp</th>
+        <th scope="col">Level</th>
+        <th scope="col">Log Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (@Model != null)
+    {
+        @foreach (var log in @Model)
+        {
+            <tr>
+                <td>@log.LogTimestamp</td>
+                @switch (@log.LogLevel)
+                {
+                    case 1:
+                        <td class="log-severity-1">@LogSeverity.Critical.ToString()</td>
+                        break;
+                    case 2:
+                        <td class="log-severity-2">@LogSeverity.High.ToString()</td>
+                        break;
+                    case 3:
+                        <td class="log-severity-3">@LogSeverity.Medium.ToString()</td>
+                        break;
+                    case 4:
+                        <td class="log-severity-4">@LogSeverity.Low.ToString()</td>
+                        break;
+                    case 5:
+                        <td class="log-severity-5">@LogSeverity.Info.ToString()</td>
+                        break;
+                }
+                <td>@log.LogMessage</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
