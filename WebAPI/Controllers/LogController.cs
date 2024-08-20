@@ -50,7 +50,7 @@ public class LogController : Controller
         }
     }
 
-    [HttpPost("create"), Authorize(Roles = "Admin")]
+    [HttpPost("create"), Authorize]
     public ActionResult CreateLog([FromBody] LogDTO data)
     {
         try
