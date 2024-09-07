@@ -100,4 +100,60 @@ public class UserController : Controller
             return RedirectToAction("Index", "User");
         }
     }
+    
+    public async Task<ActionResult> SearchByCourseType(int courseTypeId, int page = 1, int contentPerPage = 10)
+    {
+        var token = HttpContext.Request.Cookies["JWT"];
+        try
+        {
+            var courses = await _apiService.GetCoursesAsync(token);
+            var courseTypes = await _apiService.GetCourseTypesAsync(token);
+            var courseTags = await _apiService.GetCourseTags(token);
+            
+            var result = _mapper.Map<IList<CourseViewModel>>(courses);
+
+            foreach (var course in result)
+            {
+                course.CourseTypeTitle = courseTypes.FirstOrDefault(ct => ct.IdCourseType == course.IdCourseType).CourseTypeTitle;
+
+                if (course.Tags == null)
+                {
+                    course.Tags = new List<CourseTagDTO>();
+                }
+
+                foreach (var ct in courseTags.Where(ct => ct.IdCourse == course.IdCourse))
+                {
+                    course.Tags.Add(ct);
+                }
+            }
+            
+            var filteredResults = result.Where(obj => obj.IdCourseType == courseTypeId).ToList();
+            
+            var totalCourses = filteredResults.Count();
+            var totalPages = (int)Math.Ceiling(totalCourses / (double)contentPerPage);
+            
+            var model = filteredResults
+                .Skip((page - 1) * contentPerPage)
+                .Take(contentPerPage)
+                .ToList();
+            
+            var paginationModel = new PaginationViewModel
+            {
+                Courses = model,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                ContentPerPage = contentPerPage,
+                CourseTypeId = courseTypeId
+            };
+
+            ViewBag.CourseTypes = courseTypes;
+
+            return View(paginationModel);
+        }
+        catch (Exception e)
+        {
+            return RedirectToAction("Index", "User");
+        }
+    }
+
 }

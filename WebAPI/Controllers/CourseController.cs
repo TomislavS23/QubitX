@@ -117,6 +117,27 @@ public class CourseController : Controller
         }
     }
     
+    [HttpGet("search"), Authorize]
+    public ActionResult<List<CourseDTO>> ReadCoursesByTitle(string title, int page, int itemsPerPage = 10)
+    {
+        try
+        {
+            var query = _context.Courses
+                .Where(obj => obj.CourseTitle.Contains(title))
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToList();
+
+            var result = _mapper.Map<List<CourseDTO>>(query);
+            
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
     // UPDATE
     [HttpPut("update"), Authorize]
     public ActionResult<CourseDTO> UpdateCourse([FromBody] CourseDTO data)
